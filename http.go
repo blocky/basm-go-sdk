@@ -23,17 +23,12 @@ func hostFuncHTTPRequest(
 	inOffset, inSize := bytesToOffsetSize(inputData)
 	outPtr := _hostFuncHTTPRequest(inOffset, inSize)
 	runtime.KeepAlive(inputData)
-	outputData := bytesFromFatPtr(outPtr)
+	resultData := bytesFromFatPtr(outPtr)
 
-	var result HTTPRequestResult
-	err = unmarshal(outputData, &result)
-	switch {
-	case err != nil:
-		msg := "unmarshaling output data: " + err.Error()
-		return HTTPRequestOutput{}, errors.New(msg)
-	case !result.IsOk:
-		msg := "host fn returned error: " + result.Error
+	value, err := readHostResult[HTTPRequestOutput](resultData)
+	if err != nil {
+		msg := "reading host fn result: " + err.Error()
 		return HTTPRequestOutput{}, errors.New(msg)
 	}
-	return result.Value, nil
+	return value, nil
 }

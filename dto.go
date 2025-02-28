@@ -2,6 +2,7 @@ package basm
 
 import (
 	"encoding/json"
+	"errors"
 
 	"github.com/mailru/easyjson"
 )
@@ -47,4 +48,30 @@ type VerifyAttestationResult struct {
 
 type VerifyAttestationOutput struct {
 	RawClaims []byte `json:"raw_claims"`
+}
+
+type Result struct {
+	IsOk  bool   `json:"ok"`
+	Value any    `json:"value"`
+	Error string `json:"error"`
+}
+
+func readHostResult[T any](data []byte) (T, error) {
+	var zeroReturn T
+	var res Result
+	err := unmarshal(data, &res)
+	if err != nil {
+		msg := "failed to unmarshal result: " + err.Error()
+		return zeroReturn, errors.New(msg)
+	}
+	if !res.IsOk {
+		msg := "host fn returned error: " + res.Error
+		return zeroReturn, errors.New(msg)
+	}
+	value, ok := res.Value.(T)
+	if !ok {
+		msg := "failed to cast result value to expected type"
+		return zeroReturn, errors.New(msg)
+	}
+	return value, nil
 }

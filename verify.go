@@ -22,15 +22,10 @@ func hostFuncVerifyAttestation(
 	runtime.KeepAlive(inputData)
 	resultData := bytesFromFatPtr(resultPtr)
 
-	var result VerifyAttestationResult
-	err = unmarshal(resultData, &result)
-	switch {
-	case err != nil:
-		msg := "unmarshaling result data: " + err.Error()
-		return VerifyAttestationOutput{}, errors.New(msg)
-	case !result.IsOk:
-		msg := "host fn returned error: " + result.Error
+	output, err := readHostResult[VerifyAttestationOutput](resultData)
+	if err != nil {
+		msg := "reading host fn result: " + err.Error()
 		return VerifyAttestationOutput{}, errors.New(msg)
 	}
-	return result.Value, nil
+	return output, nil
 }
