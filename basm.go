@@ -1,17 +1,27 @@
 package basm
 
+// WriteToHost takes a byte slice and writes it to the shared memory of the host's
+// WebAssembly runtime. It returns a packed offset/size pair in a numerical
+// format compatible with WebAssembly return types. The host is expected to
+// free the memory when it is done with it.
 func WriteToHost(data []byte) uint64 {
 	return leakToSharedMem(data)
 }
 
+// ReadFromHost takes a packed offset/size pair in a numerical format compatible
+// with WebAssembly argument types and returns the byte slice that was written
+// to the shared memory of the host's WebAssembly runtime. The host is expected
+// to free the memory when the guest function is complete.
 func ReadFromHost(inputPtr uint64) []byte {
 	return bytesFromFatPtr(inputPtr)
 }
 
+// Log writes a message to the logs returned to the user with each invocation.
 func Log(msg string) {
 	hostFuncBufferLog(msg)
 }
 
+// HTTPRequest uses the host's HTTP client to make a request to the given URL.
 func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
 	resp, err := hostFuncHTTPRequest(httpRequestInput{
 		Method:  req.Method,
@@ -42,6 +52,8 @@ type HTTPRequestOutput struct {
 	Headers    map[string][]string `json:"headers"`
 }
 
+// VerifyAttestation uses the host's attestation verification functionality to
+// verify a transitive attestation from a Blocky attestation service.
 func VerifyAttestation(
 	input VerifyAttestationInput,
 ) (VerifyAttestationOutput, error) {
