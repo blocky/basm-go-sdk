@@ -198,12 +198,8 @@ func easyjson56de76c1DecodeGithubComBlockyBasmGoSdk2(in *jlexer.Lexer, out *resu
 		case "error":
 			out.Error = string(in.String())
 		case "value":
-			if m, ok := out.Value.(easyjson.Unmarshaler); ok {
-				m.UnmarshalEasyJSON(in)
-			} else if m, ok := out.Value.(json.Unmarshaler); ok {
-				_ = m.UnmarshalJSON(in.Raw())
-			} else {
-				out.Value = in.Interface()
+			if data := in.Raw(); in.Ok() {
+				in.AddError((out.Value).UnmarshalJSON(data))
 			}
 		default:
 			in.SkipRecursive()
@@ -232,13 +228,7 @@ func easyjson56de76c1EncodeGithubComBlockyBasmGoSdk2(out *jwriter.Writer, in res
 	{
 		const prefix string = ",\"value\":"
 		out.RawString(prefix)
-		if m, ok := in.Value.(easyjson.Marshaler); ok {
-			m.MarshalEasyJSON(out)
-		} else if m, ok := in.Value.(json.Marshaler); ok {
-			out.Raw(m.MarshalJSON())
-		} else {
-			out.Raw(json.Marshal(in.Value))
-		}
+		out.Raw((in.Value).MarshalJSON())
 	}
 	out.RawByte('}')
 }
