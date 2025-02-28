@@ -1,10 +1,10 @@
 package basm
 
-func ShareWithHost(data []byte) uint64 {
+func WriteToHost(data []byte) uint64 {
 	return leakToSharedMem(data)
 }
 
-func ReadPointerData(inputPtr uint64) []byte {
+func ReadFromHost(inputPtr uint64) []byte {
 	return bytesFromFatPtr(inputPtr)
 }
 
