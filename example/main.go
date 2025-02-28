@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"github.com/blocky/basm-go-sdk"
 )
@@ -22,16 +21,16 @@ type SecretArgs struct {
 
 type Result struct {
 	Success bool   `json:"success"`
-	Value   Output `json:"value,omitempty"`
 	Error   string `json:"error,omitempty"`
+	Value   Output `json:"value,omitempty"`
 }
 
 type Output struct {
 	RawClaims []byte `json:"raw_claims"`
 }
 
-//export kitchenSink
-func kitchenSink(inputFPtr, secInputFPtr uint64) uint64 {
+//export exampleFunc
+func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 	inputData := basm.ReadFromHost(inputFPtr)
 	var args Args
 	err := json.Unmarshal(inputData, &args)
@@ -69,8 +68,7 @@ func kitchenSink(inputFPtr, secInputFPtr uint64) uint64 {
 	case err != nil:
 		return writeError("making http request via host: " + err.Error())
 	case resp.StatusCode != 200:
-		statusStr := strconv.Itoa(resp.StatusCode)
-		return writeError("expected status code 200, got '" + statusStr + "'")
+		return writeError("received non-200 status code")
 	}
 
 	// Use the host attestation verification function
@@ -112,7 +110,9 @@ func writeResult(res Result) uint64 {
 	if err != nil {
 		panic("failed to marshal result: " + err.Error())
 	}
+	// persist the result data to the host
 	return basm.WriteToHost(data)
 }
 
+// Required for the tinygo compiler
 func main() {}

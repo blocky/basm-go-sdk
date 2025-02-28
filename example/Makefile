@@ -5,5 +5,5 @@ compile:
 run: compile
 	@echo "Running WASM module..."
 	@cat fn-call.json \
-	| cli attest-fn-call \
-	| jq -r '.function_calls[0].claims.output | @base64d | fromjson'
+	| bky-as attest-fn-call \
+	| jq -r '.function_calls[0] | "Output:\n\t\(.claims.output | @base64d | fromjson | tojson)\nLogs:\n\t\(.logs | @base64d)"'
