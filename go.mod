@@ -1,6 +1,6 @@
-module go.bky.sh/portal
+module github.com/blocky/basm-go-sdk
 
-go 1.23.5
+go 1.22.6
 
 require github.com/mailru/easyjson v0.9.0
 

@@ -22,4 +22,4 @@ linters-settings:
     sections:
       - standard # Standard section: captures all standard packages.
       - default # Default section: contains all imports that could not be matched to another section type.
-      - prefix(go.bky.sh) # Custom section: groups all imports with the specified Prefix.
+      - prefix(github.com/blocky) # Custom section: groups all imports with the specified Prefix.
