@@ -7,12 +7,20 @@ import (
 	"github.com/mailru/easyjson"
 )
 
-func marshal(v easyjson.Marshaler) ([]byte, error) {
-	return easyjson.Marshal(v)
+func marshal(v any) ([]byte, error) {
+	easy, ok := v.(easyjson.Marshaler)
+	if !ok {
+		return nil, errors.New("value does not implement easyjson.Marshaler")
+	}
+	return easyjson.Marshal(easy)
 }
 
-func unmarshal(data []byte, v easyjson.Unmarshaler) error {
-	return easyjson.Unmarshal(data, v)
+func unmarshal(data []byte, v any) error {
+	easy, ok := v.(easyjson.Unmarshaler)
+	if !ok {
+		return errors.New("value does not implement easyjson.Unmarshaler")
+	}
+	return easyjson.Unmarshal(data, easy)
 }
 
 type httpRequestInput struct {
@@ -39,9 +47,9 @@ type verifyAttestationOutput struct {
 }
 
 type result struct {
-	IsOK  bool   `json:"ok"`
-	Error string `json:"error"`
-	Value any    `json:"value"`
+	IsOK  bool            `json:"ok"`
+	Error string          `json:"error"`
+	Value json.RawMessage `json:"value"`
 }
 
 func readHostResult[T any](data []byte) (T, error) {
@@ -56,10 +64,10 @@ func readHostResult[T any](data []byte) (T, error) {
 		msg := "host fn returned error: " + res.Error
 		return zeroReturn, errors.New(msg)
 	}
-	value, ok := res.Value.(T)
-	if !ok {
-		msg := "failed to cast result value to expected type"
-		return zeroReturn, errors.New(msg)
+	var value T
+	err = unmarshal(res.Value, &value)
+	if err != nil {
+		return zeroReturn, errors.New("failed to unmarshal result value to expected type: " + err.Error())
 	}
 	return value, nil
 }
