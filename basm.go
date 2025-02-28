@@ -42,7 +42,9 @@ type HTTPRequestOutput struct {
 	Headers    map[string][]string `json:"headers"`
 }
 
-func VerifyAttestation(input VerifyAttestationInput) (VerifyAttestationOutput, error) {
+func VerifyAttestation(
+	input VerifyAttestationInput,
+) (VerifyAttestationOutput, error) {
 	resp, err := hostFuncVerifyAttestation(verifyAttestationInput{
 		EnclaveAttestedKey:    input.EnclaveAttestedKey,
 		TransitiveAttestation: input.TransitiveAttestation,

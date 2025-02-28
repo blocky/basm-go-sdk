@@ -67,7 +67,9 @@ func readHostResult[T any](data []byte) (T, error) {
 	var value T
 	err = unmarshal(res.Value, &value)
 	if err != nil {
-		return zeroReturn, errors.New("failed to unmarshal result value to expected type: " + err.Error())
+		return zeroReturn, errors.New(
+			"failed to unmarshal result value to expected type: " + err.Error(),
+		)
 	}
 	return value, nil
 }
