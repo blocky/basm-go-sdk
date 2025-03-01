@@ -23,20 +23,8 @@ func Log(msg string) {
 
 // HTTPRequest uses the host's HTTP client to make a request to the given URL.
 func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
-	resp, err := hostFuncHTTPRequest(httpRequestInput{
-		Method:  req.Method,
-		URL:     req.URL,
-		Headers: req.Headers,
-		Body:    req.Body,
-	})
-	if err != nil {
-		return HTTPRequestOutput{}, err
-	}
-	return HTTPRequestOutput{
-		StatusCode: resp.StatusCode,
-		Body:       resp.Body,
-		Headers:    resp.Headers,
-	}, nil
+	resp, err := hostFuncHTTPRequest(httpRequestInput(req))
+	return HTTPRequestOutput(resp), err
 }
 
 type HTTPRequestInput struct {
@@ -57,17 +45,8 @@ type HTTPRequestOutput struct {
 func VerifyAttestation(
 	input VerifyAttestationInput,
 ) (VerifyAttestationOutput, error) {
-	resp, err := hostFuncVerifyAttestation(verifyAttestationInput{
-		EnclaveAttestedKey:    input.EnclaveAttestedKey,
-		TransitiveAttestation: input.TransitiveAttestation,
-		AcceptableMeasures:    input.AcceptableMeasures,
-	})
-	if err != nil {
-		return VerifyAttestationOutput{}, err
-	}
-	return VerifyAttestationOutput{
-		RawClaims: resp.RawClaims,
-	}, nil
+	resp, err := hostFuncVerifyAttestation(verifyAttestationInput(input))
+	return VerifyAttestationOutput(resp), err
 }
 
 type VerifyAttestationInput struct {
