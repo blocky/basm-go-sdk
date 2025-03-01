@@ -1,17 +1,17 @@
 package basm
 
 // WriteToHost takes a byte slice and writes it to the shared memory of the host's
-// WebAssembly runtime. It returns a packed offset/size pair in a numerical
-// format compatible with WebAssembly return types. The host is expected to
-// free the memory when it is done with it.
+// WebAssembly runtime. It returns a packed offset/size pair in a format
+// compatible with WebAssembly numeric types. The host is expected to free the
+// memory when it is done with it.
 func WriteToHost(data []byte) uint64 {
 	return leakToSharedMem(data)
 }
 
-// ReadFromHost takes a packed offset/size pair in a numerical format compatible
-// with WebAssembly argument types and returns the byte slice that was written
-// to the shared memory of the host's WebAssembly runtime. The host is expected
-// to free the memory when the guest function is complete.
+// ReadFromHost takes a packed offset/size pair in a format compatible with
+// WebAssembly numeric types and returns the byte slice that was written to the
+// shared memory of the host's WebAssembly runtime. The host is expected to free
+// the memory when the guest function is complete.
 func ReadFromHost(inputPtr uint64) []byte {
 	return bytesFromFatPtr(inputPtr)
 }
