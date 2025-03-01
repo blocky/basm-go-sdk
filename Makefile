@@ -3,5 +3,5 @@ lint:
 
 pre-pr: lint
 
-easyjson:
+generate:
 	easyjson --all dto.go
