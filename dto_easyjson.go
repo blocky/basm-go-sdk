@@ -108,16 +108,25 @@ func easyjson56de76c1DecodeGithubComBlockyBasmGoSdk1(in *jlexer.Lexer, out *veri
 		}
 		switch key {
 		case "enclave_attested_app_public_key":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.EnclaveAttestedKey).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.EnclaveAttestedKey = nil
+			} else {
+				out.EnclaveAttestedKey = in.Bytes()
 			}
 		case "transitive_attestation":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.TransitiveAttestation).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.TransitiveAttestation = nil
+			} else {
+				out.TransitiveAttestation = in.Bytes()
 			}
 		case "acceptable_measurements":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.AcceptableMeasures).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.AcceptableMeasures = nil
+			} else {
+				out.AcceptableMeasures = in.Bytes()
 			}
 		default:
 			in.SkipRecursive()
@@ -136,17 +145,17 @@ func easyjson56de76c1EncodeGithubComBlockyBasmGoSdk1(out *jwriter.Writer, in ver
 	{
 		const prefix string = ",\"enclave_attested_app_public_key\":"
 		out.RawString(prefix[1:])
-		out.Raw((in.EnclaveAttestedKey).MarshalJSON())
+		out.Base64Bytes(in.EnclaveAttestedKey)
 	}
 	{
 		const prefix string = ",\"transitive_attestation\":"
 		out.RawString(prefix)
-		out.Raw((in.TransitiveAttestation).MarshalJSON())
+		out.Base64Bytes(in.TransitiveAttestation)
 	}
 	{
 		const prefix string = ",\"acceptable_measurements\":"
 		out.RawString(prefix)
-		out.Raw((in.AcceptableMeasures).MarshalJSON())
+		out.Base64Bytes(in.AcceptableMeasures)
 	}
 	out.RawByte('}')
 }
@@ -293,30 +302,30 @@ func easyjson56de76c1DecodeGithubComBlockyBasmGoSdk3(in *jlexer.Lexer, out *http
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v5 []string
+					var v14 []string
 					if in.IsNull() {
 						in.Skip()
-						v5 = nil
+						v14 = nil
 					} else {
 						in.Delim('[')
-						if v5 == nil {
+						if v14 == nil {
 							if !in.IsDelim(']') {
-								v5 = make([]string, 0, 4)
+								v14 = make([]string, 0, 4)
 							} else {
-								v5 = []string{}
+								v14 = []string{}
 							}
 						} else {
-							v5 = (v5)[:0]
+							v14 = (v14)[:0]
 						}
 						for !in.IsDelim(']') {
-							var v6 string
-							v6 = string(in.String())
-							v5 = append(v5, v6)
+							var v15 string
+							v15 = string(in.String())
+							v14 = append(v14, v15)
 							in.WantComma()
 						}
 						in.Delim(']')
 					}
-					(out.Headers)[key] = v5
+					(out.Headers)[key] = v14
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -352,24 +361,24 @@ func easyjson56de76c1EncodeGithubComBlockyBasmGoSdk3(out *jwriter.Writer, in htt
 			out.RawString(`null`)
 		} else {
 			out.RawByte('{')
-			v9First := true
-			for v9Name, v9Value := range in.Headers {
-				if v9First {
-					v9First = false
+			v18First := true
+			for v18Name, v18Value := range in.Headers {
+				if v18First {
+					v18First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v9Name))
+				out.String(string(v18Name))
 				out.RawByte(':')
-				if v9Value == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+				if v18Value == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 					out.RawString("null")
 				} else {
 					out.RawByte('[')
-					for v10, v11 := range v9Value {
-						if v10 > 0 {
+					for v19, v20 := range v18Value {
+						if v19 > 0 {
 							out.RawByte(',')
 						}
-						out.String(string(v11))
+						out.String(string(v20))
 					}
 					out.RawByte(']')
 				}
@@ -435,30 +444,30 @@ func easyjson56de76c1DecodeGithubComBlockyBasmGoSdk4(in *jlexer.Lexer, out *http
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v12 []string
+					var v21 []string
 					if in.IsNull() {
 						in.Skip()
-						v12 = nil
+						v21 = nil
 					} else {
 						in.Delim('[')
-						if v12 == nil {
+						if v21 == nil {
 							if !in.IsDelim(']') {
-								v12 = make([]string, 0, 4)
+								v21 = make([]string, 0, 4)
 							} else {
-								v12 = []string{}
+								v21 = []string{}
 							}
 						} else {
-							v12 = (v12)[:0]
+							v21 = (v21)[:0]
 						}
 						for !in.IsDelim(']') {
-							var v13 string
-							v13 = string(in.String())
-							v12 = append(v12, v13)
+							var v22 string
+							v22 = string(in.String())
+							v21 = append(v21, v22)
 							in.WantComma()
 						}
 						in.Delim(']')
 					}
-					(out.Headers)[key] = v12
+					(out.Headers)[key] = v21
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -501,24 +510,24 @@ func easyjson56de76c1EncodeGithubComBlockyBasmGoSdk4(out *jwriter.Writer, in htt
 			out.RawString(`null`)
 		} else {
 			out.RawByte('{')
-			v15First := true
-			for v15Name, v15Value := range in.Headers {
-				if v15First {
-					v15First = false
+			v24First := true
+			for v24Name, v24Value := range in.Headers {
+				if v24First {
+					v24First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v15Name))
+				out.String(string(v24Name))
 				out.RawByte(':')
-				if v15Value == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+				if v24Value == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 					out.RawString("null")
 				} else {
 					out.RawByte('[')
-					for v16, v17 := range v15Value {
-						if v16 > 0 {
+					for v25, v26 := range v24Value {
+						if v25 > 0 {
 							out.RawByte(',')
 						}
-						out.String(string(v17))
+						out.String(string(v26))
 					}
 					out.RawByte(']')
 				}
