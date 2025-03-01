@@ -3,7 +3,7 @@ module basm
 go 1.22.6
 
 require (
-	github.com/blocky/basm-go-sdk v0.0.0-20250301001758-f2c5f7db9a71
+	github.com/blocky/basm-go-sdk v0.0.0-20250301001938-49297c34b318
 	github.com/mailru/easyjson v0.9.0 // indirect
 )
 
