@@ -1,7 +1,6 @@
 package basm
 
 import (
-	"errors"
 	"runtime"
 )
 
@@ -24,10 +23,10 @@ func hostFuncHTTPRequest(
 	httpRequestOutput,
 	error,
 ) {
+	var zeroReturn httpRequestOutput
 	inputData, err := marshal(input)
 	if err != nil {
-		msg := "marshaling input data: " + err.Error()
-		return httpRequestOutput{}, errors.New(msg)
+		return zeroReturn, errWrap("marshaling input data: ", err)
 	}
 
 	inOffset, inSize := bytesToOffsetSize(inputData)
@@ -38,8 +37,7 @@ func hostFuncHTTPRequest(
 	var output httpRequestOutput
 	err = readHostResult(resultData, &output)
 	if err != nil {
-		msg := "reading host fn result: " + err.Error()
-		return httpRequestOutput{}, errors.New(msg)
+		return zeroReturn, errWrap("reading host fn result: ", err)
 	}
 	return output, nil
 }
@@ -50,10 +48,10 @@ func _hostFuncVerifyAttestation(offset, size uint32) uint64
 func hostFuncVerifyAttestation(
 	input verifyAttestationInput,
 ) (verifyAttestationOutput, error) {
+	var zeroReturn verifyAttestationOutput
 	inputData, err := marshal(input)
 	if err != nil {
-		msg := "marshaling input data: " + err.Error()
-		return verifyAttestationOutput{}, errors.New(msg)
+		return zeroReturn, errWrap("marshaling input data: ", err)
 	}
 
 	inOffset, inSize := bytesToOffsetSize(inputData)
@@ -64,8 +62,7 @@ func hostFuncVerifyAttestation(
 	var output verifyAttestationOutput
 	err = readHostResult(resultData, &output)
 	if err != nil {
-		msg := "reading host fn result: " + err.Error()
-		return verifyAttestationOutput{}, errors.New(msg)
+		return zeroReturn, errWrap("reading host fn result: ", err)
 	}
 	return output, nil
 }
