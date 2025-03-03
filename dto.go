@@ -7,20 +7,12 @@ import (
 	"github.com/mailru/easyjson"
 )
 
-func marshal(v any) ([]byte, error) {
-	easy, ok := v.(easyjson.Marshaler)
-	if !ok {
-		return nil, errors.New("value does not implement easyjson.Marshaler")
-	}
-	return easyjson.Marshal(easy)
+func marshal(v easyjson.Marshaler) ([]byte, error) {
+	return easyjson.Marshal(v)
 }
 
-func unmarshal(data []byte, v any) error {
-	easy, ok := v.(easyjson.Unmarshaler)
-	if !ok {
-		return errors.New("value does not implement easyjson.Unmarshaler")
-	}
-	return easyjson.Unmarshal(data, easy)
+func unmarshal(data []byte, v easyjson.Unmarshaler) error {
+	return easyjson.Unmarshal(data, v)
 }
 
 type httpRequestInput struct {
@@ -52,24 +44,22 @@ type result struct {
 	Value json.RawMessage `json:"value"`
 }
 
-func readHostResult[T any](data []byte) (T, error) {
-	var zeroReturn T
+func readHostResult[T easyjson.Unmarshaler](data []byte, v T) error {
 	var res result
 	err := unmarshal(data, &res)
 	if err != nil {
 		msg := "failed to unmarshal result: " + err.Error()
-		return zeroReturn, errors.New(msg)
+		return errors.New(msg)
 	}
 	if !res.IsOK {
 		msg := "host fn returned error: " + res.Error
-		return zeroReturn, errors.New(msg)
+		return errors.New(msg)
 	}
-	var value T
-	err = unmarshal(res.Value, &value)
+	err = unmarshal(res.Value, v)
 	if err != nil {
-		return zeroReturn, errors.New(
+		return errors.New(
 			"failed to unmarshal result value to expected type: " + err.Error(),
 		)
 	}
-	return value, nil
+	return nil
 }

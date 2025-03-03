@@ -35,12 +35,13 @@ func hostFuncHTTPRequest(
 	runtime.KeepAlive(inputData)
 	resultData := bytesFromFatPtr(outPtr)
 
-	value, err := readHostResult[httpRequestOutput](resultData)
+	var output httpRequestOutput
+	err = readHostResult(resultData, &output)
 	if err != nil {
 		msg := "reading host fn result: " + err.Error()
 		return httpRequestOutput{}, errors.New(msg)
 	}
-	return value, nil
+	return output, nil
 }
 
 //go:wasmimport env verifyAttestation
@@ -60,7 +61,8 @@ func hostFuncVerifyAttestation(
 	runtime.KeepAlive(inputData)
 	resultData := bytesFromFatPtr(resultPtr)
 
-	output, err := readHostResult[verifyAttestationOutput](resultData)
+	var output verifyAttestationOutput
+	err = readHostResult(resultData, &output)
 	if err != nil {
 		msg := "reading host fn result: " + err.Error()
 		return verifyAttestationOutput{}, errors.New(msg)
