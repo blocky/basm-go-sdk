@@ -7,3 +7,9 @@ run: compile
 	@cat fn-call.json \
 		| bky-as attest-fn-call \
 		| jq -r '.function_calls[0] | "Output:\n\t\(.claims.output | @base64d | fromjson | tojson)\nLogs:\n\t\(.logs | @base64d)"'
+
+tidy:
+	@go mod tidy
+
+update-local: tidy
+	@go get github.com/blocky/basm-go-sdk@latest
