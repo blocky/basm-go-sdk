@@ -20,15 +20,11 @@ WASM runtime.
 #### Testing
 
 Until a test harness is created, the best way to test the SDK is to use the
-example in the `example` directory. If you are working off of a development
-branch, in the example directory use `go get` to fetch the version you are
-working on:
+example in the `example` directory. The go.mod file in the example directory
+has been set up to use the local version of the sdk.
 
-```bash
-go get github.com/blocky/attestation-sdk-go@<branch>
-```
-
-Then update the example in `example/main.go` and run:
+When iterating on changes to the SDK, make sure to run the example to verify
+the changes work.
 
 ```bash
 make run
