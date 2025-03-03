@@ -21,23 +21,33 @@ func Log(msg string) {
 	hostFuncBufferLog(msg)
 }
 
+type HTTPRequestInput struct {
+	Method  string
+	URL     string
+	Headers map[string][]string
+	Body    []byte
+}
+
+type HTTPRequestOutput struct {
+	StatusCode int
+	Body       []byte
+	Headers    map[string][]string
+}
+
 // HTTPRequest uses the host's HTTP client to make a request to the given URL.
 func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
 	resp, err := hostFuncHTTPRequest(httpRequestInput(req))
 	return HTTPRequestOutput(resp), err
 }
 
-type HTTPRequestInput struct {
-	Method  string              `json:"method"`
-	URL     string              `json:"url"`
-	Headers map[string][]string `json:"headers"`
-	Body    []byte              `json:"body"`
+type VerifyAttestationInput struct {
+	EnclaveAttestedKey    []byte
+	TransitiveAttestation []byte
+	AcceptableMeasures    []byte
 }
 
-type HTTPRequestOutput struct {
-	StatusCode int                 `json:"status_code"`
-	Body       []byte              `json:"body"`
-	Headers    map[string][]string `json:"headers"`
+type VerifyAttestationOutput struct {
+	RawClaims []byte
 }
 
 // VerifyAttestation uses the host's attestation verification functionality to
@@ -45,16 +55,10 @@ type HTTPRequestOutput struct {
 func VerifyAttestation(
 	input VerifyAttestationInput,
 ) (VerifyAttestationOutput, error) {
-	resp, err := hostFuncVerifyAttestation(verifyAttestationInput(input))
+	resp, err := hostFuncVerifyAttestation(verifyAttestationInput{
+		EnclaveAttestedKey:    input.EnclaveAttestedKey,
+		TransitiveAttestation: input.TransitiveAttestation,
+		AcceptableMeasures:    input.AcceptableMeasures,
+	})
 	return VerifyAttestationOutput(resp), err
-}
-
-type VerifyAttestationInput struct {
-	EnclaveAttestedKey    []byte `json:"enclave_attested_app_public_key"`
-	TransitiveAttestation []byte `json:"transitive_attestation"`
-	AcceptableMeasures    []byte `json:"acceptable_measurements"`
-}
-
-type VerifyAttestationOutput struct {
-	RawClaims []byte `json:"raw_claims"`
 }

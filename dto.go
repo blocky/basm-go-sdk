@@ -29,9 +29,9 @@ type httpRequestOutput struct {
 }
 
 type verifyAttestationInput struct {
-	EnclaveAttestedKey    []byte `json:"enclave_attested_app_public_key"`
-	TransitiveAttestation []byte `json:"transitive_attestation"`
-	AcceptableMeasures    []byte `json:"acceptable_measurements"`
+	EnclaveAttestedKey    json.RawMessage `json:"enclave_attested_app_public_key"`
+	TransitiveAttestation json.RawMessage `json:"transitive_attestation"`
+	AcceptableMeasures    json.RawMessage `json:"acceptable_measurements"`
 }
 
 type verifyAttestationOutput struct {
