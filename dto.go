@@ -22,10 +22,18 @@ type httpRequestInput struct {
 	Body    []byte              `json:"body"`
 }
 
+func fromPublicHTTPInput(in HTTPRequestInput) httpRequestInput {
+	return httpRequestInput(in)
+}
+
 type httpRequestOutput struct {
 	StatusCode int                 `json:"status_code"`
 	Body       []byte              `json:"body"`
 	Headers    map[string][]string `json:"headers"`
+}
+
+func toPublicHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
+	return HTTPRequestOutput(out)
 }
 
 type verifyAttestationInput struct {
@@ -34,8 +42,24 @@ type verifyAttestationInput struct {
 	AcceptableMeasures    json.RawMessage `json:"acceptable_measurements"`
 }
 
+func fromPublicVerifyAttestationInput(
+	in VerifyAttestationInput,
+) verifyAttestationInput {
+	return verifyAttestationInput{
+		EnclaveAttestedKey:    in.EnclaveAttestedKey,
+		TransitiveAttestation: in.TransitiveAttestation,
+		AcceptableMeasures:    in.AcceptableMeasures,
+	}
+}
+
 type verifyAttestationOutput struct {
 	RawClaims []byte `json:"raw_claims"`
+}
+
+func toPublicVerifyAttestationOutput(
+	out verifyAttestationOutput,
+) VerifyAttestationOutput {
+	return VerifyAttestationOutput(out)
 }
 
 type result struct {

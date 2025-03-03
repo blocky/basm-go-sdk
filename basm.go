@@ -36,8 +36,10 @@ type HTTPRequestOutput struct {
 
 // HTTPRequest uses the host's HTTP client to make a request to the given URL.
 func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
-	resp, err := hostFuncHTTPRequest(httpRequestInput(req))
-	return HTTPRequestOutput(resp), err
+	resp, err := hostFuncHTTPRequest(
+		fromPublicHTTPInput(req),
+	)
+	return toPublicHTTPOutput(resp), err
 }
 
 type VerifyAttestationInput struct {
@@ -55,10 +57,8 @@ type VerifyAttestationOutput struct {
 func VerifyAttestation(
 	input VerifyAttestationInput,
 ) (VerifyAttestationOutput, error) {
-	resp, err := hostFuncVerifyAttestation(verifyAttestationInput{
-		EnclaveAttestedKey:    input.EnclaveAttestedKey,
-		TransitiveAttestation: input.TransitiveAttestation,
-		AcceptableMeasures:    input.AcceptableMeasures,
-	})
-	return VerifyAttestationOutput(resp), err
+	output, err := hostFuncVerifyAttestation(
+		fromPublicVerifyAttestationInput(input),
+	)
+	return toPublicVerifyAttestationOutput(output), err
 }
