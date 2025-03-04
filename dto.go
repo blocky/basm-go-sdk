@@ -22,7 +22,7 @@ type httpRequestInput struct {
 	Body    []byte              `json:"body"`
 }
 
-func fromPublicHTTPInput(in HTTPRequestInput) httpRequestInput {
+func fromExportedHTTPInput(in HTTPRequestInput) httpRequestInput {
 	return httpRequestInput(in)
 }
 
@@ -32,22 +32,22 @@ type httpRequestOutput struct {
 	Headers    map[string][]string `json:"headers"`
 }
 
-func toPublicHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
+func toExportedHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
 	return HTTPRequestOutput(out)
 }
 
 type verifyAttestationInput struct {
-	EnclaveAttestedKey    json.RawMessage `json:"enclave_attested_app_public_key"`
-	TransitiveAttestation json.RawMessage `json:"transitive_attestation"`
-	AcceptableMeasures    json.RawMessage `json:"acceptable_measurements"`
+	EnclaveAttestedKey    json.RawMessage      `json:"enclave_attested_app_public_key"`
+	TransitiveAttestation json.RawMessage      `json:"transitive_attestation"`
+	AcceptableMeasures    []EnclaveMeasurement `json:"acceptable_measurements"`
 }
 
-func fromPublicVerifyAttestationInput(
+func fromExportedVerifyAttestationInput(
 	in VerifyAttestationInput,
 ) verifyAttestationInput {
 	return verifyAttestationInput{
 		EnclaveAttestedKey:    in.EnclaveAttestedKey,
-		TransitiveAttestation: in.TransitiveAttestation,
+		TransitiveAttestation: in.TransitiveAttestedClaims,
 		AcceptableMeasures:    in.AcceptableMeasures,
 	}
 }
@@ -56,7 +56,7 @@ type verifyAttestationOutput struct {
 	RawClaims []byte `json:"raw_claims"`
 }
 
-func toPublicVerifyAttestationOutput(
+func toExportedVerifyAttestationOutput(
 	out verifyAttestationOutput,
 ) VerifyAttestationOutput {
 	return VerifyAttestationOutput(out)
