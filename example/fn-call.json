@@ -3,26 +3,7 @@
         "code_file": "x.wasm",
         "function": "exampleFunc",
         "input": {
-            "log_this_value": "this is a string from the host to log",
-            "verify_this_attestation": {
-                "enclave_attested_app_public_key": {
-                    "Platform": "plain",
-                    "PlAttests": [
-                        "eyJEYXRhIjoiZXlKamRYSjJaVjkwZVhCbElqb2ljREkxTm1zeElpd2laR0YwWVNJNklrST0iLCJNZWFzdXJlbWVudCI6eyJQbGF0Zm9ybSI6InBsYWluIiwiQ29kZSI6InBsYWluIn19",
-                        "eyJEYXRhIjoiVDIxbVR6RldNMFpCY1ZKeVZIUXZlVllyVFdkbWFXODRNa1pUV2pSbk5HTT0iLCJNZWFzdXJlbWVudCI6eyJQbGF0Zm9ybSI6InBsYWluIiwiQ29kZSI6InBsYWluIn19",
-                        "eyJEYXRhIjoiU0VwMGNYcHBOakZoUkd4V1duQk9jazl5VEU4M2RsUjRlRVI2UVZrM1VqZz0iLCJNZWFzdXJlbWVudCI6eyJQbGF0Zm9ybSI6InBsYWluIiwiQ29kZSI6InBsYWluIn19",
-                        "eyJEYXRhIjoiVlZNMGIwTlVWbTFKTnpkWVV6ZFZPRU5qU0hWM1RUMGlmUT09IiwiTWVhc3VyZW1lbnQiOnsiUGxhdGZvcm0iOiJwbGFpbiIsIkNvZGUiOiJwbGFpbiJ9fQ==",
-                        "eyJEYXRhIjoiQXRTQ0J5b00vREdvdzNhTG1DNlIzVXZ3UTJDK2dGV0Z6M2tySU9IdTQvcz0iLCJNZWFzdXJlbWVudCI6eyJQbGF0Zm9ybSI6InBsYWluIiwiQ29kZSI6InBsYWluIn19"
-                    ]
-                },
-                "transitive_attestation": "WyJXeUpPVjA1b1dWZE9hbHBFV21wT1JGcHRXa2RLYlZwcVNtdE9WR3hzV1hwUk1WcHFSVEphYlZKc1drUmpNVTlFVlRGT2VrVjZUbFJyTUU5SFVUVk9WR042VFhwbk5VMUhXWHBaZWxVd1dUSlNhazVFVVRWTmFscHRUMVJhYUU5VVRtMWFiVkV5VFhwVmQwOUhTVEJQVjBWM1RXcHNhVTlYVlhoYVIxbDZUWHBuTlZwcVp6Vk9NbGt6V1dwbmQwMTZVVEJaVjFKc1RXcFJlRnBIU1RGYWFsSnFUV3BuTWs1cWF6QlplbWM5SWl3aVdWZFNhMUZYTld0VVJ6bHVJaXdpVFVSVk0wOVhWbWxaTWtsNlRrUkdhRTFFUW1wWmVsbDNUbXBCTWs0eVNUSlpWRVUxV2xSTk1FNHlTVEZhUkdOM1dYcEdhMWw2Vm14TlZGWnNUbFJLYlUxdFJUTlBWR00wV1hwT2EwNUVhR3hOYlVwdFQwUlpNRTR5VG1sYVYxa3hXWHBDYkU1SFVUVk9SMGw2VGtSbmVsbFVRbXhOUjBreldrZFplVTlFU1RKT1ZHaHRXVmRaTVUxRVJUTlBWRkV6VFcxRk0xbFhVVEpPYWxWM1RVZEthRnBFUlRKUFYxVjRUbXBOUFNJc0ltVjVTbE5hV0U0eFlraFJhVTlxUlhoTVEwcEdZMjVLZG1OcFNUWmlibFp6WWtnd1BTSXNJbGxVV1RWYWFtTjZXVEpPYUUxcVRtaFBWMFpxVGxkTk5GbHFWVEpPTWxKcVRWUm5NVmxVWXpGT2JWVTFUakpOTlU5RVNYaE9hbEp0V2xSSk1VOUVWVFZhVkVKclRWZFNhbGw2UlRCT2VsWnFUMFJDYUU1cVJURlpha2w0VFdwT2FGcHFSbTFPVjFrMVRrZE5lRTFYVlhwYVZHc3dUVVJLYWsweVJtcE9WRlUwV21wVmQwMUVSVFZQVjFFMVRsZEpNbHBFVG14TmVrRjRUbnBWTkU1VVp6Sk5hbWQ0V2tkT2EwMXFXVDBpWFE9PSIsImV1OXhSNzc2RU5qWnd0VWpHRVJkZzVxMndXelVhUUJzWHQ3WktNNitLK2hQd0JadUVjZ1ZwdmlMcXpEY2UzU2d5dWlIRitSSG5hMC9qUzFrY1hLZC9nRT0iXQ==",
-                "acceptable_measurements": [
-                    {
-                        "Platform": "plain",
-                        "Code": "plain"
-                    }
-                ]
-            }
+            "log_this_value": "this is a string from the host to log"
         },
         "secret": {
             "bearer_token": "this is a bearer token"
