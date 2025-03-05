@@ -43,7 +43,9 @@ func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
 }
 
 type EnclaveAttestation []byte
+
 type TransitiveAttestation []byte
+
 type EnclaveMeasurement struct {
 	Platform string
 	Code     string
