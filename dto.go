@@ -46,8 +46,8 @@ func fromExportedVerifyAttestationInput(
 	in VerifyAttestationInput,
 ) verifyAttestationInput {
 	return verifyAttestationInput{
-		EnclaveAttestedKey:    in.EnclaveAttestedKey,
-		TransitiveAttestation: in.TransitiveAttestedClaims,
+		EnclaveAttestedKey:    json.RawMessage(in.EnclaveAttestedKey),
+		TransitiveAttestation: json.RawMessage(in.TransitiveAttestedClaims),
 		AcceptableMeasures:    in.AcceptableMeasures,
 	}
 }
@@ -59,7 +59,9 @@ type verifyAttestationOutput struct {
 func toExportedVerifyAttestationOutput(
 	out verifyAttestationOutput,
 ) VerifyAttestationOutput {
-	return VerifyAttestationOutput(out)
+	return VerifyAttestationOutput{
+		RawClaims: out.RawClaims,
+	}
 }
 
 type result struct {
