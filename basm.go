@@ -42,19 +42,23 @@ func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
 	return toExportedHTTPOutput(resp), err
 }
 
+type EnclaveAttestation []byte
+type TransitiveAttestation []byte
 type EnclaveMeasurement struct {
 	Platform string
 	Code     string
 }
 
 type VerifyAttestationInput struct {
-	EnclaveAttestedKey       []byte
-	TransitiveAttestedClaims []byte
+	EnclaveAttestedKey       EnclaveAttestation
+	TransitiveAttestedClaims TransitiveAttestation
 	AcceptableMeasures       []EnclaveMeasurement
 }
 
+type MarshaledAttestedObject []byte
+
 type VerifyAttestationOutput struct {
-	RawClaims []byte
+	RawClaims MarshaledAttestedObject
 }
 
 // VerifyAttestation uses the host's attestation verification functionality to
