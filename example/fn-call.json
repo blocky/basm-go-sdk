@@ -1,12 +1,10 @@
-[
-    {
-        "code_file": "x.wasm",
-        "function": "exampleFunc",
-        "input": {
-            "log_this_value": "this is a string from the host to log"
-        },
-        "secret": {
-            "bearer_token": "this is a bearer token"
-        }
-    }
-]
+{
+  "code_file": "x.wasm",
+  "function": "exampleFunc",
+  "input": {
+    "log_this_value": "this is a string from the host to log"
+  },
+  "secret": {
+    "bearer_token": "this is a bearer token"
+  }
+}
