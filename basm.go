@@ -21,6 +21,11 @@ func Log(msg string) {
 	hostFuncBufferLog(msg)
 }
 
+// LogToHost writes a message to the host's console.
+func LogToHost(msg string) {
+	hostFuncConsoleLog(msg)
+}
+
 type HTTPRequestInput struct {
 	Method  string
 	URL     string
