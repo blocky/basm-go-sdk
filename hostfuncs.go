@@ -14,6 +14,16 @@ func hostFuncBufferLog(msg string) {
 	runtime.KeepAlive(msgData)
 }
 
+//go:wasmimport env consoleLog
+func _hostFuncConsoleLog(ptr, size uint32)
+
+func hostFuncConsoleLog(msg string) {
+	msgData := []byte(msg)
+	inOffset, inLen := bytesToOffsetSize(msgData)
+	_hostFuncConsoleLog(inOffset, inLen)
+	runtime.KeepAlive(msgData)
+}
+
 //go:wasmimport env httpRequest
 func _hostFuncHTTPRequest(offset, size uint32) uint64
 
