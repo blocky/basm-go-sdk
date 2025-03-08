@@ -1,6 +1,6 @@
 module example
 
-go 1.22.6
+go 1.22
 
 require github.com/blocky/basm-go-sdk v0.0.0
 
