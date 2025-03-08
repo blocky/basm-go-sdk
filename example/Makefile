@@ -6,22 +6,27 @@ check:
 	@command -v bky-as >/dev/null 2>&1 || { echo >&2 "bky-as not found in PATH. Aborting."; exit 1; }
 	@command -v jq >/dev/null 2>&1 || { echo >&2 "jq not found in PATH. Aborting."; exit 1; }
 
-x.wasm: main.go | tmp check
+vendor: $(wildcard ../*.go) ../go.mod ../go.sum
+	@go mod vendor
+
+tmp/x.wasm: main.go | tmp check vendor
 	@echo "Building WASM module..."
 	@docker run --rm \
         -v .:/src \
         -w /src \
         tinygo/tinygo:0.32.0 \
-        tinygo build -o x.wasm -target=wasi ./...
+        tinygo build -o tmp/x.wasm -target=wasi ./main.go
 
-compile: x.wasm
+build: tmp/x.wasm
 
-run: compile
+run: build
 	@echo "Running WASM module..."
-	@cat fn-call.json \
-		| bky-as attest-fn-call > tmp/out.json
+	@cat fn-call.json | bky-as attest-fn-call > tmp/out.json
 	@echo "Log:"
 	@jq -r '.transitive_attested_function_call.logs | @base64d' tmp/out.json
 	@echo "Output:"
 	@jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson ' tmp/out.json
 
+clean:
+	@rm -rf tmp
+	@rm -rf vendor
