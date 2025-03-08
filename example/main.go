@@ -68,7 +68,7 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 		return writeError("could not unmarshal secret input args: " + err.Error())
 	}
 
-	// Use a value from the input args and use the host logging functions
+	// Use a value from the input args and use the host logging function
 	basm.Log(args.LogThisValue)
 
 	authenticatedRequest := basm.HTTPRequestInput{
