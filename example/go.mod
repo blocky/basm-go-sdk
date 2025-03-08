@@ -2,8 +2,6 @@ module example
 
 go 1.22.6
 
-toolchain go1.22.8
-
 require github.com/blocky/basm-go-sdk v0.0.0
 
 require (
