@@ -65,14 +65,6 @@ type VerifyAttestationOutput struct {
 	RawClaims []byte
 }
 
-const (
-	RawClaimsAttestFnCallHashOfCodeIdx    = 0
-	RawClaimsAttestFnCallFunctionNameIdx  = 1
-	RawClaimsAttestFnCallHashOfInputIdx   = 2
-	RawClaimsAttestFnCallOutputIdx        = 3
-	RawClaimsAttestFnCallHashOfSecretsIdx = 4
-)
-
 // VerifyAttestation uses the host's attestation verification functionality to
 // verify a transitive attestation from a Blocky attestation service.
 func VerifyAttestation(
