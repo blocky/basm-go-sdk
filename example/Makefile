@@ -2,7 +2,7 @@ compile:
 	@echo "Building WASM module..."
 	@tinygo build -o x.wasm -target=wasi main.go
 
-run:
+run: compile
 	@echo "Running WASM module..."
 	@cat fn-call.json \
 		| bky-as attest-fn-call \
