@@ -1,4 +1,4 @@
-compile: 
+compile:
 	@echo "Building WASM module..."
 	@tinygo build -o x.wasm -target=wasi main.go
 
