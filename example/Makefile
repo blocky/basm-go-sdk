@@ -1,32 +1,9 @@
-tmp:
-	@mkdir -p tmp
-
-check:
-	@command -v docker >/dev/null 2>&1 || { echo >&2 "docker not found in PATH. Aborting."; exit 1; }
-	@command -v bky-as >/dev/null 2>&1 || { echo >&2 "bky-as not found in PATH. Aborting."; exit 1; }
-	@command -v jq >/dev/null 2>&1 || { echo >&2 "jq not found in PATH. Aborting."; exit 1; }
-
-vendor: $(wildcard ../*.go) ../go.mod ../go.sum
-	@go mod vendor
-
-tmp/x.wasm: main.go | tmp check vendor
+compile: 
 	@echo "Building WASM module..."
-	@docker run --rm \
-        -v .:/src \
-        -w /src \
-        tinygo/tinygo:0.32.0 \
-        tinygo build -o tmp/x.wasm -target=wasi ./main.go
+	@tinygo build -o x.wasm -target=wasi main.go
 
-build: tmp/x.wasm
-
-run: build
+run:
 	@echo "Running WASM module..."
-	@cat fn-call.json | bky-as attest-fn-call > tmp/out.json
-	@echo "Log:"
-	@jq -r '.transitive_attested_function_call.logs | @base64d' tmp/out.json
-	@echo "Output:"
-	@jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson ' tmp/out.json
-
-clean:
-	@rm -rf tmp
-	@rm -rf vendor
+	@cat fn-call.json \
+		| bky-as attest-fn-call \
+		| jq -r '.transitive_attested_function_call | "Output:\n\t\(.claims.output | @base64d | fromjson | tojson)\nLogs:\n\t\(.logs | @base64d)"'
