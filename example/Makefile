@@ -1,8 +1,14 @@
-compile:
+.PHONY: default run build
+
+default: run
+
+x.wasm: main.go
 	@echo "Building WASM module..."
 	@tinygo build -o x.wasm -target=wasi main.go
 
-run: compile
+build: x.wasm
+
+run: build
 	@echo "Running WASM module..."
 	@cat fn-call.json \
 		| bky-as attest-fn-call \
