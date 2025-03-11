@@ -1,8 +1,10 @@
 .PHONY: default run build
 
+SRCS := $(wildcard ../*.go)
+
 default: run
 
-x.wasm: main.go
+x.wasm: main.go $(SRCS)
 	@echo "Building WASM module..."
 	@tinygo build -o x.wasm -target=wasi main.go
 
