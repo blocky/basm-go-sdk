@@ -8,4 +8,4 @@ functions.
 - Go 1.22
 - Tinygo v0.32.0
 - jq
-- [Block Attestation Service CLI](https://blocky-docs.redocly.app/attestation-service/setup#installation) `bky-as` v0.1.0-beta.3
+- Block Attestation Service CLI version f6a2c0f
