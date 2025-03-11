@@ -61,8 +61,10 @@ type VerifyAttestationInput struct {
 	AcceptableMeasures       []EnclaveMeasurement
 }
 
+type MarshaledAttestedObject []byte
+
 type VerifyAttestationOutput struct {
-	RawClaims []byte
+	RawClaims MarshaledAttestedObject
 }
 
 // VerifyAttestation uses the host's attestation verification functionality to

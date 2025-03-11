@@ -53,7 +53,7 @@ func fromExportedVerifyAttestationInput(
 }
 
 type verifyAttestationOutput struct {
-	RawClaims []byte `json:"raw_claims"`
+	RawClaims MarshaledAttestedObject `json:"raw_claims"`
 }
 
 func toExportedVerifyAttestationOutput(
