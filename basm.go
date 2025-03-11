@@ -21,6 +21,14 @@ func Log(msg string) {
 	hostFuncBufferLog(msg)
 }
 
+// LogToHost writes a message to standard error of the host. Because it logs to
+// the host, this function is only useful for debugging or when developing a
+// guest function in local development mode.  For most uses, [Log] is more
+// appropriate.
+func LogToHost(msg string) {
+	hostFuncConsoleLog(msg)
+}
+
 type HTTPRequestInput struct {
 	Method  string
 	URL     string

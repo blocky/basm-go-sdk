@@ -3,7 +3,8 @@
         "code_file": "x.wasm",
         "function": "exampleFunc",
         "input": {
-            "log_this_value": "this is a string from the host to log"
+            "log_value": "string logged and returned in response",
+            "log_to_host_value": "✅ string logged to host"
         },
         "secret": {
             "bearer_token": "this is a bearer token"

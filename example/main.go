@@ -35,7 +35,8 @@ var transitiveAttestedClaims = []byte(`
 `)
 
 type Args struct {
-	LogThisValue string `json:"log_this_value"`
+	LogValue       string `json:"log_value"`
+	LogToHostValue string `json:"log_to_host_value"`
 }
 
 type SecretArgs struct {
@@ -68,8 +69,11 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 		return writeError("could not unmarshal secret input args: " + err.Error())
 	}
 
-	// Use a value from the input args and use the host logging function
-	basm.Log(args.LogThisValue)
+	// Use a value from the input args and use the host buffered logging function
+	basm.Log(args.LogValue)
+
+	// Use a value from the input args and use the host console logging function
+	basm.LogToHost(args.LogToHostValue)
 
 	authenticatedRequest := basm.HTTPRequestInput{
 		Method: "GET",
