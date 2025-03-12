@@ -1,4 +1,4 @@
-.PHONY: default run build
+.PHONY: default run build clean
 
 SRCS := $(wildcard ../*.go)
 
@@ -10,8 +10,17 @@ x.wasm: main.go $(SRCS)
 
 build: x.wasm
 
-run: build
+result.json: x.wasm
 	@echo "Running WASM module..."
 	@cat fn-call.json \
-		| BKY_AS_HOST="local-server" bky-as attest-fn-call \
-		| jq -r '.transitive_attested_function_call | "Output:\n\t\(.claims.output | @base64d | fromjson | tojson)\nLogs:\n\t\(.logs | @base64d)"'
+		| BKY_AS_HOST="local-server" bky-as attest-fn-call > result.json
+
+run: result.json
+	@echo "## Output"
+	@jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson ' result.json
+	@echo ""
+	@echo "## Log"
+	@jq -r '.transitive_attested_function_call.logs | @base64d' result.json
+
+clean:
+	rm x.wasm result.json

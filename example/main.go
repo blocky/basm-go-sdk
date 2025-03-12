@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/blocky/basm-go-sdk"
+	"github.com/blocky/basm-go-sdk/x/xbasm"
 )
 
 // Test data for verifying SDK functionality.
@@ -41,7 +42,8 @@ type Result struct {
 }
 
 type Output struct {
-	RawClaims []byte `json:"raw_claims,omitempty"`
+	RawClaims []byte              `json:"raw_claims,omitempty"`
+	Claims    *xbasm.FnCallClaims `json:"claims,omitempty"`
 }
 
 //export exampleFunc
@@ -110,8 +112,14 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 		return writeError("expected attestation claims, got empty")
 	}
 
+	claims, err := xbasm.ParseFnCallClaims(verifyOutput.RawClaims)
+	if err != nil {
+		return writeError("parsing call claims: " + err.Error())
+	}
+
 	return writeOutput(Output{
 		RawClaims: verifyOutput.RawClaims,
+		Claims:    claims,
 	})
 }
 
