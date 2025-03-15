@@ -59,9 +59,7 @@ type verifyAttestationOutput struct {
 func toExportedVerifyAttestationOutput(
 	out verifyAttestationOutput,
 ) VerifyAttestationOutput {
-	return VerifyAttestationOutput{
-		RawClaims: out.RawClaims,
-	}
+	return VerifyAttestationOutput(out)
 }
 
 type result struct {
