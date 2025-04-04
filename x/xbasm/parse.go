@@ -5,7 +5,7 @@ import (
 
 	"github.com/mailru/easyjson"
 
-	"github.com/blocky/basm-go-sdk"
+	"github.com/blocky/basm-go-sdk/basm"
 )
 
 type FnCallClaims struct {

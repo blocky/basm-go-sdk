@@ -5,5 +5,5 @@ pre-pr: lint
 	$(MAKE) -C ./example clean run
 
 generate:
-	easyjson --all dto.go
+	easyjson --all basm/dto.go
 	easyjson x/xbasm/parse.go

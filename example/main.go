@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 
-	"github.com/blocky/basm-go-sdk"
+	"github.com/blocky/basm-go-sdk/basm"
 	"github.com/blocky/basm-go-sdk/x/xbasm"
 )
 
