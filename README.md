@@ -1,6 +1,4 @@
-# The Go SDK for the Blocky Attestation Service Wasm Runtime
-
-(working name)
+# Go SDK for the Blocky Attestation Service Wasm Runtime (BASM)
 
 This SDK provides functions for interacting with Blocky Attestation Service
 WASM runtime.
