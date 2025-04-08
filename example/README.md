@@ -5,7 +5,7 @@ functions.
 
 ## Dependencies
 
-- Go 1.22
-- Tinygo v0.32.0
+- Go (see go.mod for version)
+- Tinygo v0.34.0
 - jq
-- Block Attestation Service CLI version fd9f4e8
+- Block Attestation Service CLI (see shell.nix for version)
