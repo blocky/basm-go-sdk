@@ -5,7 +5,7 @@ SHELL := bash
 .PHONY: default
 default: run
 
-srcs := $(wildcard ../*.go)
+srcs := $(wildcard ../**/*.go)
 
 x.wasm: main.go $(srcs)
 	@echo "Building WASM module..."
