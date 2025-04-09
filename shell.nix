@@ -6,11 +6,11 @@
   # This default value can be overwritten from the command line by using a valid
   # semver tag to grab a stable version, a git commit to grab a specific unstable
   # version, or "latest" to grab the latest unstable version, e.g.
-  #   `nix-shell --argstr bkyas_version v0.1.0-beta.5`
-  #   `nix-shell --argstr bkyas_version <full git commit sha>`
-  #   `nix-shell --argstr bkyas_version latest`
+  #   `nix-shell --pure --argstr bkyas_version v0.1.0-beta.5`
+  #   `nix-shell --pure --argstr bkyas_version <full git commit sha>`
+  #   `nix-shell --pure --argstr bkyas_version latest`
   # or use the default value by omitting the argument, e.g.
-  #   `nix-shell`
+  #   `nix-shell --pure`
   bkyas_version ? "e7a2c061da429c66dcfadaf6007e0a4161fea6dc",
 }:
 let
@@ -27,15 +27,18 @@ mkDevShell {
 
   version = bkyas_version;
 
+  # Note that these package versions are determined by the nixpkgs version
+  # version used to build the shell.
   devDependencies = [
     pkgs.git # for project management
     pkgs.gnumake # for project management
-    pkgs.go_1_22 # for prepping for building wasm
+    pkgs.go # for prepping for building wasm, golangci-lint, and easyjson
     pkgs.golangci-lint # for linting go files
     pkgs.easyjson # for generating json marshaling go code
     pkgs.gotools # for tools like goimports
     pkgs.jq # for processing data in examples
     pkgs.nixfmt-rfc-style # for formatting nix files
     pkgs.tinygo # for building wasm
+    pkgs.toybox # include common unix commands for convenience
   ];
 }

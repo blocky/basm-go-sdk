@@ -22,7 +22,7 @@ let
     '';
   };
 
-  stableShell = pkgs.mkShellNoCC {
+  stableShell = pkgs.mkShell {
     packages = devDependencies ++ [ bky-as-stable ];
     shellHook = ''
       echo "Stable bky-as version: ${version}"
@@ -39,7 +39,7 @@ let
     '';
   };
 
-  unstableShell = pkgs.mkShellNoCC {
+  unstableShell = pkgs.mkShell {
     packages =
       devDependencies
       ++ [ bky-as-unstable ]
