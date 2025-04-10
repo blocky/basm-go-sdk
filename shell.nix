@@ -24,6 +24,7 @@ mkDevShell {
   # version used to build the shell.
   devDependencies = [
     pkgs.git # for project management
+    pkgs.less # for viewing files
     pkgs.gnumake # for project management
     pkgs.go # for prepping for building wasm, golangci-lint, and easyjson
     pkgs.golangci-lint # for linting go files
