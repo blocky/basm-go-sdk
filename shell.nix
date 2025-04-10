@@ -3,14 +3,7 @@
   # the development shell. This value should be updated as the version of
   # the bky-as cli the example test works against is updated.
   #
-  # This default value can be overwritten from the command line by using a valid
-  # semver tag to grab a stable version, a git commit to grab a specific unstable
-  # version, or "latest" to grab the latest unstable version, e.g.
-  #   `nix-shell --pure --argstr bkyas_version v0.1.0-beta.5`
-  #   `nix-shell --pure --argstr bkyas_version <full git commit sha>`
-  #   `nix-shell --pure --argstr bkyas_version latest`
-  # or use the default value by omitting the argument, e.g.
-  #   `nix-shell --pure`
+  # This default value can be overwritten from the command line.
   bkyas_version ? "e7a2c061da429c66dcfadaf6007e0a4161fea6dc",
 }:
 let
