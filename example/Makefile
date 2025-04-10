@@ -23,4 +23,4 @@ run: result.json
 	@jq -r '.transitive_attested_function_call.logs | @base64d' result.json
 
 clean:
-	rm -f x.wasm result.json
+	rm x.wasm result.json

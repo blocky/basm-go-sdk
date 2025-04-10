@@ -17,7 +17,7 @@ WASM runtime.
     - The SDK is designed to work with the Blocky Attestation Service
     - The version compatible with this SDK is pinned in the `shell.nix` file.
 
-Additional project dependencies are specified in tbe `shell.nix` file. 
+Additional project dependencies are specified in tbe `shell.nix` file.
 
 ### Development
 
