@@ -1,8 +1,8 @@
 lint:
 	golangci-lint run --config golangci.yaml
 
-pre-pr: lint
-	$(MAKE) -C ./example clean run
+.PHONY: pre-pr
+pre-pr: lint test-integration
 
 generate:
 	easyjson --all basm/dto.go
