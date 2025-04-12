@@ -7,25 +7,23 @@ WASM runtime.
 
 ### Dependencies
 
-- Go 1.22.6
-- Tinygo v0.32.0
+- Go 1.23.8
+- Tinygo v0.34.0
 - golangci-lint
+- jq
 - [easyjson](https://github.com/mailru/easyjson) v0.9.0
     - Used for generating JSON serialization code
 
 ### Development
 
-#### Testing
+#### Integration Testing
 
-Until a test harness is created, the best way to test the SDK is to use the
-example in the `example` directory. The go.mod file in the example directory
-has been set up to use the local version of the sdk.
+SDK examples are compiled to wasm and tested against the Blocky Attestation
+Service using the `bky-as` CLI. The tests are run using the [`testscript`
+library](https://pkg.go.dev/github.com/rogpeppe/go-internal/testscript).
 
-When iterating on changes to the SDK, make sure to run the example to verify
-the changes work.
+Run the integration tests with:
 
 ```bash
-make run
+make test-integration
 ```
-
-Verify that the output is as expected.
