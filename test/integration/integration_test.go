@@ -1,7 +1,6 @@
 package integration_test
 
 import (
-	"io/fs"
 	"os"
 	"path/filepath"
 	"testing"
@@ -19,7 +18,7 @@ func Test(t *testing.T) {
 			dest := filepath.Join(env.WorkDir, "x.wasm")
 			wasmBinary, err := os.ReadFile(src)
 			require.NoError(t, err)
-			return os.WriteFile(dest, wasmBinary, fs.ModePerm)
+			return os.WriteFile(dest, wasmBinary, 0777)
 		},
 	})
 }
