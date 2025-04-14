@@ -8,14 +8,17 @@ generate:
 	easyjson --all basm/dto.go
 	easyjson x/xbasm/parse.go
 
-srcs := $(wildcard **/*.go)
+sdk_srcs := $(wildcard **/*.go)
 wasm_src_dir := ./test/integration/testdata
 wasm_src := $(wasm_src_dir)/main.go
 wasm_out := $(wasm_src_dir)/x.wasm
 
-$(wasm_out): $(srcs)
+.PHONY: wasm
+wasm: $(wasm_out)
+
+$(wasm_out): $(wasm_src) $(sdk_srcs)
 	@echo "Building WASM module..."
-	@tinygo build -o $(wasm_out) -target=wasi $(wasm_src)
+	@tinygo build -o $@ -target=wasi $<
 
 .PHONY: test-integration
 test-integration: $(wasm_out)
