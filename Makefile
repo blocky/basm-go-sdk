@@ -22,4 +22,4 @@ $(wasm_out): $(wasm_src) $(sdk_srcs)
 
 .PHONY: test-integration
 test-integration: $(wasm_out)
-	go test -v ./test/integration/... -count=1
+	@go test -v ./test/integration/... -count=1
