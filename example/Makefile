@@ -29,4 +29,5 @@ run: result.json
 
 .PHONY: clean
 clean:
-	rm x.wasm result.json
+	# ignore errors due to missing files
+	-rm x.wasm result.json

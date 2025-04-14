@@ -23,5 +23,4 @@ pre-pr: lint generate
 
 .PHONY: clean
 clean:
-	# - ignore errors due to missing files
-	-$(MAKE) -C ./example clean
+	$(MAKE) -C ./example clean
