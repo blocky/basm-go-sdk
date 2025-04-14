@@ -19,6 +19,7 @@ generate: $(easyjson_generated)
 lint:
 	golangci-lint run --config golangci.yaml
 
+.PHONY: pre-pr
 pre-pr: lint generate
 	$(MAKE) clean
 	$(MAKE) -C ./example run
