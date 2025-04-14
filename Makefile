@@ -1,5 +1,6 @@
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := generate
 .DELETE_ON_ERROR:
 
 # add easyjson source file targets here

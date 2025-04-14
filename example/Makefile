@@ -1,15 +1,13 @@
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := run
 .DELETE_ON_ERROR:
-
-.PHONY: default
-default: run
 
 srcs := $(wildcard ../**/*.go)
 
 x.wasm: main.go $(srcs)
 	@echo "Building WASM module..."
-	@tinygo build -o $@ -target=wasi main.go
+	@tinygo build -o $@ -target=wasi $<
 
 .PHONY: build
 build: x.wasm
