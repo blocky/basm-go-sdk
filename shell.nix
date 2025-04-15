@@ -4,7 +4,7 @@
   # the bky-as cli the example test works against is updated.
   #
   # This default value can be overwritten from the command line.
-  bkyAsVersion ? "e7a2c061da429c66dcfadaf6007e0a4161fea6dc",
+  bkyAsVersion ? "latest",
 }:
 let
   nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-24.11";

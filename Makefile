@@ -4,7 +4,7 @@ SHELL := bash
 .DELETE_ON_ERROR:
 
 # add easyjson source file targets here
-easyjson_sources := basm/dto.go x/xbasm/parse.go
+easyjson_sources := basm/dto.go
 easyjson_generated := $(easyjson_sources:.go=_easyjson.go)
 
 # Rule to generate *_easyjson.go files
