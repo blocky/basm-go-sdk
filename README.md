@@ -7,13 +7,35 @@ WASM runtime.
 
 ### Dependencies
 
-- Go 1.22.6
-- Tinygo v0.32.0
+- Go (see `go.mod` for version)
+- Tinygo v0.34.0
+- jq
 - golangci-lint
 - [easyjson](https://github.com/mailru/easyjson) v0.9.0
     - Used for generating JSON serialization code
+- `bky-as` - Blocky Attestation Service
+    - The SDK is designed to work with the Blocky Attestation Service
+    - The version compatible with this SDK is pinned in the `shell.nix` file.
+
+Additional project dependencies are specified in tbe `shell.nix` file.
 
 ### Development
+
+### Nix Shell
+To enter a development shell with all dependencies, run:
+
+```bash
+nix-shell --pure
+```
+
+The development shell can be started with a specific version of `bky-as` by
+specifying the version via the `--argstr` flag:
+
+```bash
+nix-shell --pure --argstr bkyAsVersion v0.1.0-beta.5 # stable version
+nix-shell --pure --argstr bkyAsVersion <full git commit sha> # specific unstable version
+nix-shell --pure --argstr bkyAsVersion latest # latest unstable version
+```
 
 #### Testing
 
