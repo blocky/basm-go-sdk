@@ -19,8 +19,12 @@ generate: $(easyjson_generated)
 lint:
 	golangci-lint run --config golangci.yaml
 
+.PHONY: tidy
+tidy:
+	@go mod tidy
+
 .PHONY: pre-pr
-pre-pr: lint test-integration
+pre-pr: tidy generate lint test-integration
 
 .PHONY: clean
 clean:
