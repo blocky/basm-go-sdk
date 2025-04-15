@@ -14,7 +14,7 @@ let
     pname = "bky-as";
     version = bkyAsVersion;
     src = builtins.fetchurl {
-      url = "https://github.com/blocky/attestation-service-demo/releases/download/${version}/bky-as_${goos}_${goarch}";
+      url = "https://github.com/blocky/attestation-service-demo/releases/download/${bkyAsVersion}/bky-as_${goos}_${goarch}";
     };
     unpackPhase = ":";
     installPhase = ''
@@ -25,7 +25,7 @@ let
   stableShell = pkgs.mkShell {
     packages = devDependencies ++ [ bkyAsStable ];
     shellHook = ''
-      echo "Stable bky-as version: ${version}"
+      echo "Stable bky-as version: ${bkyAsVersion}"
     '';
   };
 
@@ -42,7 +42,7 @@ let
   unstableShell = pkgs.mkShell {
     packages =
       devDependencies
-      ++ [ bky-as-unstable ]
+      ++ [ bkyAsUnstable ]
       #dependencies required by the fetch script
       ++ [
         pkgs.gh
@@ -51,9 +51,9 @@ let
       ];
     shellHook = ''
       bin=$(pwd)/tmp/bin
-      fetch-bky-as.sh $bin ${version} ${goos} ${goarch}
+      fetch-bky-as.sh $bin ${bkyAsVersion} ${goos} ${goarch}
       export PATH=$bin:$PATH
-      echo "Unstable bky-as version: ${version}"
+      echo "Unstable bky-as version: ${bkyAsVersion}"
     '';
   };
 in
