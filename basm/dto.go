@@ -15,6 +15,7 @@ func unmarshal(data []byte, v easyjson.Unmarshaler) error {
 	return easyjson.Unmarshal(data, v)
 }
 
+//easyjson:json
 type httpRequestInput struct {
 	Method  string              `json:"method"`
 	URL     string              `json:"url"`
@@ -26,6 +27,7 @@ func fromExportedHTTPInput(in HTTPRequestInput) httpRequestInput {
 	return httpRequestInput(in)
 }
 
+//easyjson:json
 type httpRequestOutput struct {
 	StatusCode int                 `json:"status_code"`
 	Body       []byte              `json:"body"`
@@ -36,6 +38,7 @@ func toExportedHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
 	return HTTPRequestOutput(out)
 }
 
+//easyjson:json
 type verifyAttestationInput struct {
 	EnclaveAttestedKey    json.RawMessage      `json:"enclave_attested_app_public_key"`
 	TransitiveAttestation json.RawMessage      `json:"transitive_attestation"`
@@ -52,6 +55,7 @@ func fromExportedVerifyAttestationInput(
 	}
 }
 
+//easyjson:json
 type verifyAttestationOutput struct {
 	RawClaims MarshaledAttestedObject `json:"raw_claims"`
 }
@@ -62,6 +66,7 @@ func toExportedVerifyAttestationOutput(
 	return VerifyAttestationOutput(out)
 }
 
+//easyjson:json
 type result struct {
 	IsOK  bool            `json:"ok"`
 	Error string          `json:"error"`
