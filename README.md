@@ -21,8 +21,6 @@ WASM runtime.
 
 Additional project dependencies are specified in tbe `shell.nix` file.
 
-### Development
-
 ### Nix Shell
 
 To enter a development shell with all dependencies, run:
@@ -46,7 +44,7 @@ Note that any command can be run using the shell via the `--run` flag:
 nix-shell --pure --run "make pre-pr"
 ```
 
-#### Testing
+### Testing
 
 SDK examples are compiled to wasm and tested against the Blocky Attestation
 Service using the `bky-as` CLI. The tests are run using the [`testscript`
