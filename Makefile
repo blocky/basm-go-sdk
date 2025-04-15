@@ -24,14 +24,14 @@ tidy:
 	@go mod tidy
 
 .PHONY: pre-pr
-pre-pr: tidy generate lint test-integration
+pre-pr: tidy generate lint test
 
 .PHONY: clean
 clean:
 	$(MAKE) -C ./example clean
 
 sdk_srcs := $(wildcard **/*.go)
-wasm_src_dir := ./test/integration/testdata
+wasm_src_dir := $(shell realpath ./test/testdata)
 wasm_src := $(wasm_src_dir)/main.go
 wasm_out := $(wasm_src_dir)/x.wasm
 
@@ -42,6 +42,11 @@ $(wasm_out): $(wasm_src) $(sdk_srcs)
 	@echo "Building WASM module..."
 	@tinygo build -o $@ -target=wasi $<
 
-.PHONY: test-integration
-test-integration: $(wasm_out)
-	@go test -v ./test/integration/... -count=1
+test_scripts := $(shell realpath $(wildcard ./test/scripts/*.txtar))
+
+.PHONY: test
+test: $(wasm_out)
+	@for script in $(test_scripts); do \
+  		echo "Running test script: $$script..."; \
+		testscript -v -e WASM_FILE=$(wasm_out) $$script; \
+	done

@@ -38,14 +38,14 @@ nix-shell --pure --argstr bkyAsVersion <full git commit sha> # specific unstable
 nix-shell --pure --argstr bkyAsVersion latest # latest unstable version
 ```
 
-#### Integration Testing
+#### Testing
 
 SDK examples are compiled to wasm and tested against the Blocky Attestation
 Service using the `bky-as` CLI. The tests are run using the [`testscript`
 library](https://pkg.go.dev/github.com/rogpeppe/go-internal/testscript).
 
-Run the integration tests with:
+Run the test scripts with:
 
 ```bash
-make test-integration
+make test
 ```
