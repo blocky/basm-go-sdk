@@ -48,5 +48,5 @@ test_scripts := $(shell realpath $(wildcard ./test/scripts/*.txtar))
 test: $(wasm_out)
 	@for script in $(test_scripts); do \
   		echo "Running test script: $$script..."; \
-		testscript -v -e WASM_FILE=$(wasm_out) $$script; \
+		testscript -e WASM_FILE=$(wasm_out) $$script; \
 	done
