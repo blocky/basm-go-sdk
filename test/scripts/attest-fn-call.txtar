@@ -1,3 +1,4 @@
+exec cp $WASM_FILE .
 exists x.wasm
 stdin fn-call.json
 exec bky-as attest-fn-call
