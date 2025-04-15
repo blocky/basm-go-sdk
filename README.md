@@ -44,7 +44,7 @@ Note that any command can be run using the shell via the `--run` flag:
 
 ```bash
 nix-shell --pure --run "make pre-pr"
-```bash
+```
 
 #### Testing
 
