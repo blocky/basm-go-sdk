@@ -1,26 +1,31 @@
-.PHONY: default run build clean
+MAKEFLAGS += --warn-undefined-variables
+SHELL := bash
+.DEFAULT_GOAL := run
+.DELETE_ON_ERROR:
 
-SRCS := $(wildcard ../*.go)
+srcs := $(wildcard ../**/*.go)
 
-default: run
-
-x.wasm: main.go $(SRCS)
+x.wasm: main.go $(srcs)
 	@echo "Building WASM module..."
-	@tinygo build -o x.wasm -target=wasi main.go
+	@tinygo build -o $@ -target=wasi $<
 
+.PHONY: build
 build: x.wasm
 
 result.json: x.wasm
 	@echo "Running WASM module..."
 	@cat fn-call.json \
-		| BKY_AS_HOST="local-server" bky-as attest-fn-call > result.json
+		| BKY_AS_HOST="local-server" bky-as attest-fn-call > $@
 
+.PHONY: run
 run: result.json
 	@echo "## Output"
-	@jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson ' result.json
+	@jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson ' $<
 	@echo ""
 	@echo "## Log"
-	@jq -r '.transitive_attested_function_call.logs | @base64d' result.json
+	@jq -r '.transitive_attested_function_call.logs | @base64d' $<
 
+.PHONY: clean
 clean:
-	rm x.wasm result.json
+	# ignore errors due to missing files
+	-rm x.wasm result.json
