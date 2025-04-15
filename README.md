@@ -32,9 +32,9 @@ The development shell can be started with a specific version of `bky-as` by
 specifying the version via the `--argstr` flag:
 
 ```bash
-nix-shell --pure --argstr bkyas_version v0.1.0-beta.5 # stable version
-nix-shell --pure --argstr bkyas_version <full git commit sha> # specific unstable version
-nix-shell --pure --argstr bkyas_version latest # latest unstable version
+nix-shell --pure --argstr bkyAsVersion v0.1.0-beta.5 # stable version
+nix-shell --pure --argstr bkyAsVersion <full git commit sha> # specific unstable version
+nix-shell --pure --argstr bkyAsVersion latest # latest unstable version
 ```
 
 #### Testing

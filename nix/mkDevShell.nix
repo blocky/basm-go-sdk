@@ -1,6 +1,6 @@
 {
   pkgs,
-  version,
+  bkyAsVersion,
   devDependencies,
 }:
 let
@@ -10,9 +10,9 @@ let
 
   isCommit = x: builtins.match "^[0-9a-f]{40}$" x != null;
 
-  bky-as-stable = pkgs.stdenv.mkDerivation {
+  bkyAsStable = pkgs.stdenv.mkDerivation {
     pname = "bky-as";
-    version = version;
+    version = bkyAsVersion;
     src = builtins.fetchurl {
       url = "https://github.com/blocky/attestation-service-demo/releases/download/${version}/bky-as_${goos}_${goarch}";
     };
@@ -23,15 +23,15 @@ let
   };
 
   stableShell = pkgs.mkShell {
-    packages = devDependencies ++ [ bky-as-stable ];
+    packages = devDependencies ++ [ bkyAsStable ];
     shellHook = ''
       echo "Stable bky-as version: ${version}"
     '';
   };
 
-  bky-as-unstable = pkgs.stdenv.mkDerivation {
+  bkyAsUnstable = pkgs.stdenv.mkDerivation {
     pname = "bky-as";
-    version = version;
+    version = bkyAsVersion;
     src = ./fetch-bky-as.sh;
     unpackPhase = ":";
     installPhase = ''
@@ -57,7 +57,7 @@ let
     '';
   };
 in
-if isCommit version || version == "latest" then
+if isCommit bkyAsVersion || bkyAsVersion == "latest" then
   unstableShell
 else
   # If the version is not a commit hash or "latest", we assume it is a stable

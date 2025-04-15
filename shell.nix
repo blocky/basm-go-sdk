@@ -4,7 +4,7 @@
   # the bky-as cli the example test works against is updated.
   #
   # This default value can be overwritten from the command line.
-  bkyas_version ? "e7a2c061da429c66dcfadaf6007e0a4161fea6dc",
+  bkyAsVersion ? "e7a2c061da429c66dcfadaf6007e0a4161fea6dc",
 }:
 let
   nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-24.11";
@@ -18,7 +18,7 @@ in
 mkDevShell {
   pkgs = pkgs;
 
-  version = bkyas_version;
+  bkyAsVersion = bkyAsVersion;
 
   # Note that these package versions are determined by the nixpkgs version
   # version used to build the shell.
