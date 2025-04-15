@@ -108,13 +108,9 @@ func easyjson56de76c1DecodeGithubComBlockyBasmGoSdkBasm1(in *jlexer.Lexer, out *
 		}
 		switch key {
 		case "enclave_attested_app_public_key":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.EnclaveAttestedKey).UnmarshalJSON(data))
-			}
+			out.EnclaveAttestedKey = string(in.String())
 		case "transitive_attestation":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.TransitiveAttestation).UnmarshalJSON(data))
-			}
+			out.TransitiveAttestation = string(in.String())
 		case "acceptable_measurements":
 			if in.IsNull() {
 				in.Skip()
@@ -155,12 +151,12 @@ func easyjson56de76c1EncodeGithubComBlockyBasmGoSdkBasm1(out *jwriter.Writer, in
 	{
 		const prefix string = ",\"enclave_attested_app_public_key\":"
 		out.RawString(prefix[1:])
-		out.Raw((in.EnclaveAttestedKey).MarshalJSON())
+		out.String(string(in.EnclaveAttestedKey))
 	}
 	{
 		const prefix string = ",\"transitive_attestation\":"
 		out.RawString(prefix)
-		out.Raw((in.TransitiveAttestation).MarshalJSON())
+		out.String(string(in.TransitiveAttestation))
 	}
 	{
 		const prefix string = ",\"acceptable_measurements\":"

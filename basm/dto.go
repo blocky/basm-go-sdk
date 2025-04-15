@@ -40,8 +40,8 @@ func toExportedHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
 
 //easyjson:json
 type verifyAttestationInput struct {
-	EnclaveAttestedKey    json.RawMessage      `json:"enclave_attested_app_public_key"`
-	TransitiveAttestation json.RawMessage      `json:"transitive_attestation"`
+	EnclaveAttestedKey    string               `json:"enclave_attested_app_public_key"`
+	TransitiveAttestation string               `json:"transitive_attestation"`
 	AcceptableMeasures    []EnclaveMeasurement `json:"acceptable_measurements"`
 }
 
@@ -49,8 +49,8 @@ func fromExportedVerifyAttestationInput(
 	in VerifyAttestationInput,
 ) verifyAttestationInput {
 	return verifyAttestationInput{
-		EnclaveAttestedKey:    json.RawMessage(in.EnclaveAttestedKey),
-		TransitiveAttestation: json.RawMessage(in.TransitiveAttestedClaims),
+		EnclaveAttestedKey:    string(in.EnclaveAttestedKey),
+		TransitiveAttestation: string(in.TransitiveAttestedClaims),
 		AcceptableMeasures:    in.AcceptableMeasures,
 	}
 }
