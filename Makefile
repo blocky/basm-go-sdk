@@ -1,6 +1,6 @@
 MAKEFLAGS += --warn-undefined-variables
 SHELL := bash
-.DEFAULT_GOAL := generate
+.DEFAULT_GOAL := build
 .DELETE_ON_ERROR:
 
 # add easyjson source file targets here
@@ -15,6 +15,9 @@ easyjson_generated := $(easyjson_sources:.go=_easyjson.go)
 .PHONY: generate
 generate: $(easyjson_generated)
 
+.PHONY: build
+build: generate wasm
+
 .PHONY: lint
 lint:
 	golangci-lint run --config golangci.yaml
@@ -28,7 +31,7 @@ pre-pr: tidy generate lint test
 
 .PHONY: clean
 clean:
-	$(MAKE) -C ./example clean
+	-@rm test/testdata/x.wasm
 
 sdk_srcs := $(wildcard ./basm/**/*.go)
 wasm_src_dir := $(shell realpath ./test/testdata)
