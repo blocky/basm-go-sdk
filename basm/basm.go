@@ -50,9 +50,9 @@ func HTTPRequest(req HTTPRequestInput) (HTTPRequestOutput, error) {
 	return toExportedHTTPOutput(resp), err
 }
 
-type EnclaveAttestation []byte
+type EnclaveAttestation string
 
-type TransitiveAttestation []byte
+type TransitiveAttestation string
 
 type EnclaveMeasurement struct {
 	Platform string
