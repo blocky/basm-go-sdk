@@ -16,12 +16,13 @@ WASM runtime.
 - `bky-as` - Blocky Attestation Service
     - The SDK is designed to work with the Blocky Attestation Service
     - The version compatible with this SDK is pinned in the `shell.nix` file.
+- [`testscript`](https://pkg.go.dev/github.com/rogpeppe/go-internal/testscript)
+  - Used for running executable and filesystem tests.
 
 Additional project dependencies are specified in tbe `shell.nix` file.
 
-### Development
-
 ### Nix Shell
+
 To enter a development shell with all dependencies, run:
 
 ```bash
@@ -37,17 +38,20 @@ nix-shell --pure --argstr bkyAsVersion <full git commit sha> # specific unstable
 nix-shell --pure --argstr bkyAsVersion latest # latest unstable version
 ```
 
-#### Testing
-
-Until a test harness is created, the best way to test the SDK is to use the
-example in the `example` directory. The go.mod file in the example directory
-has been set up to use the local version of the sdk.
-
-When iterating on changes to the SDK, make sure to run the example to verify
-the changes work.
+Note that any command can be run using the shell via the `--run` flag:
 
 ```bash
-make run
+nix-shell --pure --run "make pre-pr"
 ```
 
-Verify that the output is as expected.
+### Testing
+
+SDK examples are compiled to wasm and tested against the Blocky Attestation
+Service using the `bky-as` CLI. The tests are run using the [`testscript`
+CLI tool](https://pkg.go.dev/github.com/rogpeppe/go-internal/testscript).
+
+Run the test scripts with:
+
+```bash
+make test
+```

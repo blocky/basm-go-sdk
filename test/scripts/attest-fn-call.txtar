@@ -1,0 +1,47 @@
+# [setup] copy the wasm binary to test directory
+exec cp $WASM_FILE .
+
+# [execute] call the bky-as CLI to attest a function call
+stdin fn-call.json
+exec bky-as attest-fn-call
+cp stdout result.json
+
+# [check] assert stderr and stdout expected values
+stderr '✅ string logged to host'
+exec jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson' result.json
+cp stdout output.json
+exec jq -e '.success == true' output.json
+exec jq -e '.transitive_attested_function_call.logs | @base64d == "string logged and returned in response"' result.json
+
+-- fn-call.json --
+{
+    "code_file": "x.wasm",
+    "function": "exampleFunc",
+    "input": {
+        "log_value": "string logged and returned in response",
+        "log_to_host_value": "✅ string logged to host"
+    },
+    "secret": {
+        "bearer_token": "this is a bearer token"
+    }
+}
+
+-- config.toml --
+# a set of acceptable server enclave measurements for CLI to interact with
+acceptable_measurements = [
+    # platform and code pair identifies the acceptable server implementation
+
+    # a measurement that is valid for when the server is running on a non-TEE environment
+    { platform = "plain", code = "plain" },
+    # a measurement that is valid for when the server is running in debug mode on nitro
+    { platform = "nitro", code = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" },
+]
+
+# token authorizing CLI's access to the server
+auth_token = "user_auth_token"
+
+# the server that the CLI interacts with.
+# `local-server` is a special host value will start a local attestation service
+# server for testing and development. To interact with a real server, replace
+# `local-server` with the server's address.
+host = "local-server"
