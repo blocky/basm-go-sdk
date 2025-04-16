@@ -30,7 +30,7 @@ pre-pr: tidy generate lint test
 clean:
 	$(MAKE) -C ./example clean
 
-sdk_srcs := $(wildcard **/*.go)
+sdk_srcs := $(wildcard ./basm/**/*.go)
 wasm_src_dir := $(shell realpath ./test/testdata)
 wasm_src := $(wasm_src_dir)/main.go
 wasm_out := $(wasm_src_dir)/x.wasm
