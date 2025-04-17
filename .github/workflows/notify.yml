@@ -7,6 +7,8 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+
     - name: Post a message in a channel
       uses: slackapi/slack-github-action@v2.0.0
       with:
@@ -26,3 +28,17 @@ jobs:
                 text:
                   type: "plain_text"
                   text: "This is a plain text section block."
+          
+
+    - name: "integration(incoming): post a message via payload file"
+      id: payload_file
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        errors: true
+        payload-file-path: ./.github/workflows/resources/incoming-webhook.json
+        payload-templated: true
+        webhook: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
+        webhook-type: incoming-webhook
+      env:
+        JOB_STATUS: ${{ job.status }}
+        ATTACHMENT_COLOR: ${{ (job.status == 'success' && 'good') || (job.status == 'failure' && 'danger') || 'warning' }}
