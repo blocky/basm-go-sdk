@@ -29,10 +29,10 @@ jobs:
             - color: "#ed1515"
               fields:
                 - title: "Repository"
-                  value: "${{ github.repository }}"
+                  value: "<${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>"
                 - title: "Ref"
                   value: "${{ github.ref }}"
                 - title: "Commit"
-                  value: "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}>"
+                  value: "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
                 - title: "Workflow"
                   value: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }}>"
