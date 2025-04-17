@@ -37,7 +37,7 @@ jobs:
         errors: true
         payload-file-path: ./.github/workflows/resources/incoming-webhook.json
         payload-templated: true
-        webhook: ${{ secrets.SLACK_INCOMING_WEBHOOK }}
+        webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
         webhook-type: incoming-webhook
       env:
         JOB_STATUS: ${{ job.status }}
