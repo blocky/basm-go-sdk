@@ -9,26 +9,26 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Post a message in a channel
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
-        webhook-type: incoming-webhook
-        payload: |
-          text: "*GitHub Action build result*: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          blocks:
-            - type: "section"
-              text:
-                type: "mrkdwn"
-                text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          attachments:
-            color: "#f2c744"
-            blocks:
-              - type: "section"
-                text:
-                  type: "plain_text"
-                  text: "This is a plain text section block."
-          
+#    - name: Post a message in a channel
+#      uses: slackapi/slack-github-action@v2.0.0
+#      with:
+#        webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
+#        webhook-type: incoming-webhook
+#        payload: |
+#          text: "*GitHub Action build result*: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#          blocks:
+#            - type: "section"
+#              text:
+#                type: "mrkdwn"
+#                text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#          attachments:
+#            color: "#f2c744"
+#            blocks:
+#              - type: "section"
+#                text:
+#                  type: "plain_text"
+#                  text: "This is a plain text section block."
+#
 
     - name: "integration(incoming): post a message via payload file"
       id: payload_file
