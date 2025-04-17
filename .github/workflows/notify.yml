@@ -24,7 +24,7 @@ jobs:
             - type: "section"
               text:
                 type: "mrkdwn"
-                text: ":x: GitHub Action workflow triggered by ${{ github.event_name }} event failed."
+                text: ":x: GitHub Action workflow triggered by `${{ github.event_name }}` event failed."
           attachments:
             - color: "#ed1515"
               fields:
@@ -33,6 +33,6 @@ jobs:
                 - title: "Ref"
                   value: "${{ github.ref }}"
                 - title: "Commit"
-                  value: "<${{ github.repositoryUrl }}/commit/${{ github.sha }}>"
+                  value: "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}>"
                 - title: "Workflow"
                   value: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }}>"
