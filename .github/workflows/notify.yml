@@ -15,30 +15,24 @@ jobs:
         webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
-          text: "*GitHub Action build result*: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
           blocks:
-            - type: "section"
-              text:
-                type: "mrkdwn"
-                text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          attachments:
-            - color: "#f2c744"
-              blocks:
-                - type: "section"
-                  text:
-                    type: "plain_text"
-                    text: "This is a plain text section block."
-
-
-    - name: "integration(incoming): post a message via payload file"
-      id: payload_file
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        errors: true
-        payload-file-path: ./.github/workflows/resources/incoming-webhook.json
-        payload-templated: true
-        webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
-        webhook-type: incoming-webhook
-      env:
-        JOB_STATUS: ${{ job.status }}
-        ATTACHMENT_COLOR: ${{ (job.status == 'success' && 'good') || (job.status == 'failure' && 'danger') || 'warning' }}
+          - type: section
+          text:
+          type: mrkdwn
+          text: ":x: *GitHub Action `${{ github.workflow }}` failed!*"
+          - type: section
+          fields:
+          - type: mrkdwn
+           text: "*Repository:*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
+          - type: mrkdwn
+           text: "*Ref:*\n`${{ github.ref }}`"
+          - type: mrkdwn
+           text: "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
+          - type: mrkdwn
+           text: "*Author:*\n<https://github.com/${{ github.actor }}|${{ github.actor }}>"
+          - type: mrkdwn
+           text: "*Workflow:*\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+          - type: context
+          elements:
+          - type: mrkdwn
+           text: "Event: `${{ github.event_name }}` • Job status: `${{ job.status }}`"
