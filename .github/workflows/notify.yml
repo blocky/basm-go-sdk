@@ -32,5 +32,7 @@ jobs:
                   value: "${{ github.repository }}"
                 - title: "Ref"
                   value: "${{ github.ref }}"
+                - title: "Commit"
+                  value: "<${{ github.repositoryUrl }}/commit/${{ github.sha }}>"
                 - title: "Workflow"
-                  value: "<${{ github.payload.repository.html_url }}/actions/runs/${{ github.runId }}>"
+                  value: "<${{ github.payload.repository.html_url }}/actions/runs/${{ github.runId }}|${{ github.workflow }}>"
