@@ -16,23 +16,19 @@ jobs:
         webhook-type: incoming-webhook
         payload: |
           blocks:
-          - type: section
-          text:
-          type: mrkdwn
-          text: ":x: *GitHub Action `${{ github.workflow }}` failed!*"
-          - type: section
-          fields:
-          - type: mrkdwn
-           text: "*Repository:*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
-          - type: mrkdwn
-           text: "*Ref:*\n`${{ github.ref }}`"
-          - type: mrkdwn
-           text: "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
-          - type: mrkdwn
-           text: "*Author:*\n<https://github.com/${{ github.actor }}|${{ github.actor }}>"
-          - type: mrkdwn
-           text: "*Workflow:*\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-          - type: context
-          elements:
-          - type: mrkdwn
-           text: "Event: `${{ github.event_name }}` • Job status: `${{ job.status }}`"
+            - type: mrkdwn
+              text: ":x: *GitHub Action `${{ github.workflow }}` failed!*"
+            - type: mrkdwn
+             text: "*Repository:*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
+            - type: mrkdwn
+             text: "*Ref:*\n`${{ github.ref }}`"
+            - type: mrkdwn
+             text: "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
+            - type: mrkdwn
+             text: "*Author:*\n<https://github.com/${{ github.actor }}|${{ github.actor }}>"
+            - type: mrkdwn
+             text: "*Workflow:*\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+            - type: context
+            elements:
+            - type: mrkdwn
+             text: "Event: `${{ github.event_name }}` • Job status: `${{ job.status }}`"
