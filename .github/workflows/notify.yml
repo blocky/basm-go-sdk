@@ -7,28 +7,26 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Setup environment variables
+      shell: bash
+      run: |
+        echo " failing workflow "
+        exit 1
 
-    - name: Post a message in a channel
+    - name: Notify monitoring of workflow failure
+      if: failure()
       uses: slackapi/slack-github-action@v2.0.0
       with:
         webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
           blocks:
-            - type: mrkdwn
-              text: ":x: *GitHub Action `${{ github.workflow }}` failed!*"
-            - type: mrkdwn
-             text: "*Repository:*\n<https://github.com/${{ github.repository }}|${{ github.repository }}>"
-            - type: mrkdwn
-             text: "*Ref:*\n`${{ github.ref }}`"
-            - type: mrkdwn
-             text: "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}"
-            - type: mrkdwn
-             text: "*Author:*\n<https://github.com/${{ github.actor }}|${{ github.actor }}>"
-            - type: mrkdwn
-             text: "*Workflow:*\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-            - type: context
-            elements:
-            - type: mrkdwn
-             text: "Event: `${{ github.event_name }}` • Job status: `${{ job.status }}`"
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: "GitHub Action workflow triggered by ${{ github.event_name }} event failed."
+          attachments:
+            - color: "#ed1515"
+              fields:
+                - title: "Repository"
+                  value: "${{ github.repository }}"

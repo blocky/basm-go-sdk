@@ -7,7 +7,7 @@
         {
           "title": "Repository",
           "short": false,
-          "value": "<${{ github.payload.repository.html_url }}|${{ github.payload.repository.full_name }}>"
+          "value": "${{ github.repository }}"
         },
         {
           "title": "Ref",
@@ -17,12 +17,12 @@
         {
           "title": "Commit",
           "short": false,
-          "value": "<${{ github.payload.repository.html_url }}/commit/${{ github.sha }}|${{ github.sha }}>"
+          "value": "<${{ github.repositoryUrl }}/commit/${{ github.sha }}>"
         },
         {
           "title": "Author",
           "short": false,
-          "value": "<https://github.com/${{ github.actor }}|${{ github.actor }}>"
+          "value": "${{ github.actor }}"
         },
         {
           "title": "Workflow",
