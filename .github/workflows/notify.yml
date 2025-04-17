@@ -5,6 +5,34 @@ on:
 
 jobs:
   notify:
-    uses: blocky/actions/.github/workflows/notify-failure.yml@main
-    secrets:
-      slack-webhook: ${{ secrets.NOTIFY_SLACK_TMP_NOTIFY_SLACK_TEST_WEBHOOK_URL }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup environment variables
+      shell: bash
+      run: |
+        echo " failing workflow "
+        exit 1
+
+    - name: Notify monitoring of workflow failure
+      if: failure()
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: ${{ secrets.NOTIFY_SLACK_MONITORING_WEBHOOK_URL }}
+        webhook-type: incoming-webhook
+        payload: |
+          blocks:
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: ":x: GitHub Action workflow triggered by `${{ github.event_name }}` event failed."
+          attachments:
+            - color: "#ed1515"
+              fields:
+                - title: "Repository"
+                  value: "${{ github.repository }}"
+                - title: "Ref"
+                  value: "${{ github.ref }}"
+                - title: "Commit"
+                  value: "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}>"
+                - title: "Workflow"
+                  value: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }}>"
