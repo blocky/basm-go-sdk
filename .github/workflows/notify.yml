@@ -35,4 +35,4 @@ jobs:
                 - title: "Commit"
                   value: "<${{ github.repositoryUrl }}/commit/${{ github.sha }}>"
                 - title: "Workflow"
-                  value: "<${{ github.payload.repository.html_url }}/actions/runs/${{ github.runId }}|${{ github.workflow }}>"
+                  value: "<${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|${{ github.workflow }}>"
