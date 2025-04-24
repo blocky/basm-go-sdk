@@ -14,7 +14,7 @@ let
   };
 
   mkDevShell = import ./nix/mkDevShell.nix;
-  testscript = import ./nix/testscript.nix {pkgs = pkgs;};
+  goInternal = import ./nix/goInternal.nix {pkgs = pkgs;};
 in
 mkDevShell {
   pkgs = pkgs;
@@ -36,6 +36,6 @@ mkDevShell {
     pkgs.tinygo # for building wasm
     pkgs.toybox # include common unix commands for convenience
     pkgs.envsubst # for expanding env vars in files
-    testscript
+    goInternal # for the testscript and txtar tools
   ];
 }
