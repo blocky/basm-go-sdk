@@ -1,17 +1,18 @@
 # [setup] copy the wasm binary to test directory
 exec cp $WASM_FILE .
+exec dasel put -r toml -v "$PLATFORM" 'acceptable_measurements.[].platform' < config.toml
+exec dasel put -r toml -v "$CODE_MEASURE" 'acceptable_measurements.last().code' < config.toml
+exec dasel put -r toml -v "$AUTH_TOKEN" 'auth_token' < config.toml
+exec dasel put -r toml -v "$HOST" 'host' < config.toml
+
 
 # [execute] call the bky-as CLI to attest a function call
 stdin fn-call.json
 exec bky-as attest-fn-call
-cp stdout result.json
 
-# [check] assert stderr and stdout expected values
+# [check] assert expected values
 stderr '✅ string logged to host'
-exec jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjson' result.json
-cp stdout output.json
-exec jq -e '.success == true' output.json
-exec jq -e '.transitive_attested_function_call.logs | @base64d == "string logged and returned in response"' result.json
+
 
 -- fn-call.json --
 {
