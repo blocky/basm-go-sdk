@@ -66,7 +66,8 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 		// requests to httpbin.org/bearer returns 200 if the Authorization header
 		// includes a Bearer token.
 		// https://httpbin.org/#/Auth/get_bearer
-		URL: "https://httpbin.org/bearer",
+		// Note this endpoint is a self-hosted version of httpbin.
+		URL: "https://test-httpbin.onrender.com/bearer",
 		Headers: map[string][]string{
 			"Authorization": {
 				// Use a value from the secret input
