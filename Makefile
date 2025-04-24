@@ -79,3 +79,6 @@ test-integration: $(template_out) $(wasm_out)
 .PHONY: test-local
 test-local: $(wasm_out)
 	@testscript -e WASM_FILE=$(wasm_out) "$(script_dir)/local.txtar"
+
+.PHONY: test
+test: test-local test-integration
