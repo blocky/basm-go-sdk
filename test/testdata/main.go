@@ -88,8 +88,8 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 	// Use the host attestation verification function
 	verifyOutput, err := basm.VerifyAttestation(
 		basm.VerifyAttestationInput{
-			EnclaveAttestedKey:       basm.EnclaveAttestation(enclaveAttestedAppPublicKey),
-			TransitiveAttestedClaims: basm.TransitiveAttestation(transitiveAttestedClaims),
+			EnclaveAttestedKey:       enclaveAttestedAppPublicKey,
+			TransitiveAttestedClaims: transitiveAttestedClaims,
 			AcceptableMeasures: []basm.EnclaveMeasurement{
 				{
 					// The enclave and transitive attestations were created by
