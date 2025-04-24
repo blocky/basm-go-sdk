@@ -1,5 +1,6 @@
 # [setup] copy the wasm binary to test directory
 exec cp $WASM_FILE .
+
 # [execute] call the bky-as CLI to attest a function call
 stdin fn-call.json
 exec bky-as attest-fn-call

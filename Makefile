@@ -7,7 +7,7 @@ SHELL := bash
 testdata_dir := $(shell realpath ./test/testdata)
 script_dir := $(shell realpath ./test/scripts)
 template_dir :=  $(shell realpath ./test/templates)
-rendered_template_dir := $(shell mktemp -d -t bky-basm-rendered)
+rendered_template_dir := $(shell mktemp -d -t bky-basm-rendered.XXXXXX)
 
 # add easyjson source file targets here
 easyjson_src := basm/dto.go
