@@ -17,8 +17,8 @@ pkgs.buildGoModule rec {
   doCheck = false;
 
   meta = {
-    description = "The testscript command runs testscript scripts in a fresh temporary work directory tree";
-    homepage = "https://github.com/rogpeppe/go-internal/cmd/testscript";
+    description = "The go-internal package includes various packages used by the Go team, such as testscript, txtar, and more.";
+    homepage = "https://github.com/rogpeppe/go-internal";
     license = pkgs.lib.licenses.bsd3;
     maintainers = with pkgs.lib.maintainers; [ dlm ];
   };
