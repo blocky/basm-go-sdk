@@ -71,7 +71,7 @@ template_out := $(patsubst $(template_dir)/%.mustache,$(rendered_template_dir)/%
 .INTERMEDIATE: $(template_out)
 
 # Set default values for BASM_ variables. These can be overridden by the user
-# e.g. `BASM_USER_SECRET=mysecret make test`
+# e.g. `BASM_HOST=http://api.bky.sh/staging/delphi make test`
 BASM_PLATFORM ?= plain
 BASM_CODE_MEASURE ?= plain
 BASM_AUTH_TOKEN ?= auth token
