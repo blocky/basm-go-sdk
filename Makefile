@@ -76,7 +76,6 @@ BASM_PLATFORM ?= plain
 BASM_CODE_MEASURE ?= plain
 BASM_AUTH_TOKEN ?= auth token
 BASM_HOST ?= local-server
-BASM_USER_SECRET ?= this is a bearer token
 
 # Render each template from its mustache source. This rule is used when make sees
 # a dependency that matches the `$(rendered_template_dir)/%` pattern.
@@ -89,7 +88,6 @@ $(rendered_template_dir)/%: $(template_dir)/%.mustache | make-rendered-template-
 		--arg BASM_CODE_MEASURE "$(BASM_CODE_MEASURE)" \
 		--arg BASM_AUTH_TOKEN "$(BASM_AUTH_TOKEN)" \
 		--arg BASM_HOST "$(BASM_HOST)" \
-		--arg BASM_USER_SECRET "$(BASM_USER_SECRET)" \
 		'$$ARGS.named' \
 		| mustache $< > $@
 

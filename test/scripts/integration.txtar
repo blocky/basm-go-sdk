@@ -11,3 +11,16 @@ exec jq -r '.transitive_attested_function_call.claims.output | @base64d | fromjs
 cp stdout output.json
 exec jq -e '.success == true' output.json
 exec jq -e '.transitive_attested_function_call.logs | @base64d == "string logged and returned in response"' result.json
+
+-- fn-call.json --
+{
+    "code_file": "x.wasm",
+    "function": "exampleFunc",
+    "input": {
+        "log_value": "string logged and returned in response",
+        "log_to_host_value": "✅ string logged to host"
+    },
+    "secret": {
+        "bearer_token": "this is a bearer token"
+    }
+}
