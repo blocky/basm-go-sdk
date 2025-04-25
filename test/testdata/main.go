@@ -66,7 +66,8 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 		// requests to httpbin.org/bearer returns 200 if the Authorization header
 		// includes a Bearer token.
 		// https://httpbin.org/#/Auth/get_bearer
-		URL: "https://httpbin.org/bearer",
+		// Note this endpoint is a self-hosted version of httpbin.
+		URL: "https://test-httpbin.onrender.com/bearer",
 		Headers: map[string][]string{
 			"Authorization": {
 				// Use a value from the secret input
@@ -87,8 +88,8 @@ func exampleFunc(inputFPtr, secInputFPtr uint64) uint64 {
 	// Use the host attestation verification function
 	verifyOutput, err := basm.VerifyAttestation(
 		basm.VerifyAttestationInput{
-			EnclaveAttestedKey:       basm.EnclaveAttestation(enclaveAttestedAppPublicKey),
-			TransitiveAttestedClaims: basm.TransitiveAttestation(transitiveAttestedClaims),
+			EnclaveAttestedKey:       enclaveAttestedAppPublicKey,
+			TransitiveAttestedClaims: transitiveAttestedClaims,
 			AcceptableMeasures: []basm.EnclaveMeasurement{
 				{
 					// The enclave and transitive attestations were created by
