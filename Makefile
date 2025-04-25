@@ -55,7 +55,7 @@ rendered_template_dir := $(or $(TMPDIR), /tmp)/bky-basm-rendered
 
 .PHONY: make-rendered-template-dir
 make-rendered-template-dir:
-	$(info rendered template directory: $(rendered_template_dir))
+	@echo "rendered template directory: $(rendered_template_dir)"
 	@mkdir -p $(rendered_template_dir)
 
 .PHONY: delete-rendered-template-dir
