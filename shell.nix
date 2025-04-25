@@ -35,7 +35,7 @@ mkDevShell {
     pkgs.nixfmt-rfc-style # for formatting nix files
     pkgs.tinygo # for building wasm
     pkgs.toybox # include common unix commands for convenience
-    pkgs.envsubst # for expanding env vars in files
+    pkgs.mustache-go # for templating test files
     goInternal # for the testscript and txtar tools
   ];
 }

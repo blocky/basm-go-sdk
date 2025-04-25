@@ -70,6 +70,22 @@ template_out := $(patsubst $(template_dir)/%.tmpl,$(rendered_template_dir)/%,$(t
 $(rendered_template_dir)/%: $(template_dir)/%.tmpl
 	@envsubst < $< > $@
 
+# Render each template from its mustache source. This rule is used when make sees
+# a dependency that matches the `$(rendered_template_dir)/%` pattern.
+# Syntax notes: `$<` represents the first dependency of the rule, which is the
+# mustache template file name. `$@` represents the target of the rule, which is
+# the rendered file name.
+$(rendered_template_dir)/%: $(template_dir)/%.mustache | make-rendered-template-dir
+	@jq -n \
+		--arg BASM_PLATFORM "$(BASM_PLATFORM)" \
+		--arg BASM_CODE_MEASURE "$(BASM_CODE_MEASURE)" \
+		--arg BASM_AUTH_TOKEN "$(BASM_AUTH_TOKEN)" \
+		--arg BASM_HOST "$(BASM_HOST)" \
+		--arg BASM_USER_SECRET "$(BASM_USER_SECRET)" \
+		'$$ARGS.named' \
+		| mustache $< > $@
+
+# Run the integration test and delete the temp dir afterward
 .PHONY: test-integration
 test-integration: $(template_out) $(wasm_out)
 	@txtar-c $(rendered_template_dir) \
