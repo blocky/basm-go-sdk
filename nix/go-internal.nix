@@ -20,6 +20,5 @@ pkgs.buildGoModule rec {
     description = "The go-internal package includes various packages used by the Go team, such as testscript, txtar, and more.";
     homepage = "https://github.com/rogpeppe/go-internal";
     license = pkgs.lib.licenses.bsd3;
-    maintainers = with pkgs.lib.maintainers; [ dlm ];
   };
 }
