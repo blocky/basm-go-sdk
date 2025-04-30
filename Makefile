@@ -58,9 +58,9 @@ BASM_HOST ?= local-server
 
 .PHONY: test-integration
 test-integration: $(wasm_out)
-	# Use jq and mustache to render env vars into the input files for configuration
-	# and secrets, concatenate with the test script and pipe the whole txtar
-	# package to testscript.
+# Use jq and mustache to render env vars into the input files for configuration
+# and secrets, concatenate with the test script and pipe the whole txtar
+# package to testscript.
 	@jq -n \
 		--arg BASM_PLATFORM "$(BASM_PLATFORM)" \
 		--arg BASM_CODE_MEASURE "$(BASM_CODE_MEASURE)" \
