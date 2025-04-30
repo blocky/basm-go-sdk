@@ -56,9 +56,11 @@ BASM_CODE_MEASURE ?= plain
 BASM_AUTH_TOKEN ?= auth token
 BASM_HOST ?= local-server
 
-# Run the integration test and delete the temp dir afterward
 .PHONY: test-integration
 test-integration: $(wasm_out)
+	# Use jq and mustache to render env vars into the input files for configuration
+	# and secrets, concatenate with the test script and pipe the whole txtar
+	# package to testscript.
 	@jq -n \
 		--arg BASM_PLATFORM "$(BASM_PLATFORM)" \
 		--arg BASM_CODE_MEASURE "$(BASM_CODE_MEASURE)" \
