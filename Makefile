@@ -8,17 +8,9 @@ testdata_dir := $(shell realpath ./test/testdata)
 script_dir := $(shell realpath ./test/scripts)
 template_dir :=  $(shell realpath ./test/templates)
 
-# add easyjson source file targets here
-easyjson_sources := basm/dto.go
-easyjson_generated := $(easyjson_sources:.go=_easyjson.go)
-
-# Rule to generate *_easyjson.go files
-%_easyjson.go: %.go
-	@easyjson $<
-
-# Generate all *_easyjson.go files
 .PHONY: generate
-generate: $(easyjson_generated)
+generate:
+	go generate ./...
 
 .PHONY: build
 build: generate wasm
@@ -38,16 +30,16 @@ pre-pr: tidy generate lint test
 clean:
 	-@rm test/testdata/x.wasm
 
-sdk_srcs := $(wildcard ./basm/**/*.go ./x/**/*.go)
+go_sources := $(shell find . -type f -name "*.go" ! -name "*_test.go")
 wasm_src := $(testdata_dir)/main.go
 wasm_out := $(testdata_dir)/x.wasm
 
 .PHONY: wasm
 wasm: $(wasm_out)
 
-$(wasm_out): $(wasm_src) $(sdk_srcs)
+$(wasm_out): $(go_sources)
 	@echo "Building WASM module..."
-	@tinygo build -o $@ -target=wasi $<
+	@tinygo build -o $@ -target=wasi $(wasm_src)
 
 # Set default values for BASM_ variables. These can be overridden by the user
 # e.g. `BASM_HOST=http://api.bky.sh/staging/delphi make test`

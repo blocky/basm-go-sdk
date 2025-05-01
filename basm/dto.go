@@ -1,7 +1,8 @@
+//go:generate easyjson -all -no_std_marshalers
+
 package basm
 
 import (
-	"encoding/json"
 	"errors"
 
 	"github.com/mailru/easyjson"
@@ -15,7 +16,6 @@ func unmarshal(data []byte, v easyjson.Unmarshaler) error {
 	return easyjson.Unmarshal(data, v)
 }
 
-//easyjson:json
 type httpRequestInput struct {
 	Method  string              `json:"method"`
 	URL     string              `json:"url"`
@@ -27,7 +27,6 @@ func fromExportedHTTPInput(in HTTPRequestInput) httpRequestInput {
 	return httpRequestInput(in)
 }
 
-//easyjson:json
 type httpRequestOutput struct {
 	StatusCode int                 `json:"status_code"`
 	Body       []byte              `json:"body"`
@@ -38,7 +37,6 @@ func toExportedHTTPOutput(out httpRequestOutput) HTTPRequestOutput {
 	return HTTPRequestOutput(out)
 }
 
-//easyjson:json
 type verifyAttestationInput struct {
 	EnclaveAttestedKey    string               `json:"enclave_attested_app_public_key"`
 	TransitiveAttestation string               `json:"transitive_attestation"`
@@ -55,7 +53,6 @@ func fromExportedVerifyAttestationInput(
 	}
 }
 
-//easyjson:json
 type verifyAttestationOutput struct {
 	RawClaims MarshaledAttestedObject `json:"raw_claims"`
 }
@@ -66,14 +63,13 @@ func toExportedVerifyAttestationOutput(
 	return VerifyAttestationOutput(out)
 }
 
-//easyjson:json
 type result struct {
-	IsOK  bool            `json:"ok"`
-	Error string          `json:"error"`
-	Value json.RawMessage `json:"value"`
+	IsOK  bool   `json:"ok"`
+	Error string `json:"error"`
+	Value []byte `json:"value"`
 }
 
-func readHostResult[T easyjson.Unmarshaler](data []byte, v T) error {
+func readHostResult(data []byte, v easyjson.Unmarshaler) error {
 	var res result
 	err := unmarshal(data, &res)
 	if err != nil {
