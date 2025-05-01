@@ -38,14 +38,14 @@ pre-pr: tidy generate lint test
 clean:
 	-@rm test/testdata/x.wasm
 
-sdk_srcs := $(wildcard ./basm/**/*.go ./x/**/*.go)
+go_srcs := $(shell find . -type f -name "*.go" ! -name "*_test.go")
 wasm_src := $(testdata_dir)/main.go
 wasm_out := $(testdata_dir)/x.wasm
 
 .PHONY: wasm
 wasm: $(wasm_out)
 
-$(wasm_out): $(wasm_src) $(sdk_srcs)
+$(wasm_out): $(wasm_src) $(go_srcs)
 	@echo "Building WASM module..."
 	@tinygo build -o $@ -target=wasi $<
 

@@ -1,7 +1,6 @@
 package basm
 
 import (
-	"encoding/json"
 	"errors"
 
 	"github.com/mailru/easyjson"
@@ -68,12 +67,12 @@ func toExportedVerifyAttestationOutput(
 
 //easyjson:json
 type result struct {
-	IsOK  bool            `json:"ok"`
-	Error string          `json:"error"`
-	Value json.RawMessage `json:"value"`
+	IsOK  bool   `json:"ok"`
+	Error string `json:"error"`
+	Value []byte `json:"value"`
 }
 
-func readHostResult[T easyjson.Unmarshaler](data []byte, v T) error {
+func readHostResult(data []byte, v easyjson.Unmarshaler) error {
 	var res result
 	err := unmarshal(data, &res)
 	if err != nil {
