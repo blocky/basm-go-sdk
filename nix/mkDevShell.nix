@@ -25,6 +25,7 @@ let
   stableShell = pkgs.mkShell {
     packages = devDependencies ++ [ bkyAsStable ];
     shellHook = ''
+      set -e
       echo "Stable bky-as version: ${bkyAsVersion}"
     '';
   };
@@ -50,6 +51,7 @@ let
         pkgs.jq
       ];
     shellHook = ''
+      set -e
       bin=$(pwd)/tmp/bin
       fetch-bky-as.sh $bin ${bkyAsVersion} ${goos} ${goarch}
       export PATH=$bin:$PATH
