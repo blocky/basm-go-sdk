@@ -27,6 +27,7 @@ let
     shellHook = ''
       set -e
       echo "Stable bky-as version: ${bkyAsVersion}"
+      set +e
     '';
   };
 
@@ -56,6 +57,7 @@ let
       fetch-bky-as.sh $bin ${bkyAsVersion} ${goos} ${goarch}
       export PATH=$bin:$PATH
       echo "Unstable bky-as version: ${bkyAsVersion}"
+      set +e
     '';
   };
 in
